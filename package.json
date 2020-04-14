@@ -1,0 +1,18 @@
+{
+  "name": "ilc-demo-apps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install-all": "node run_all.js npm i",
+    "start": "node start_all.js",
+    "build:all": "node run_all.js npm run build",
+    "postinstall": "npm run install-all"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "4.0.1"
+  }
+}
