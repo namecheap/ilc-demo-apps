@@ -12,6 +12,7 @@
   "author": "Justin McMurdie",
   "license": "ISC",
   "dependencies": {
+    "ilc-adapter-vue": "^1.9.1",
     "rxjs": "6.3.3",
     "serve": "^11.3.0",
     "single-spa-vue": "^1.4.0",

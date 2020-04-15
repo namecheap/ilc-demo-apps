@@ -7,7 +7,7 @@ module.exports = {
 	devtool: false,
 	output: {
 		path: path.resolve(__dirname, '../dist'),
-		publicPath: 'http://127.0.0.1:3000/dist/',
+		publicPath: 'http://127.0.0.1:8239/dist/',
 		filename: '[name].[chunkhash].js'
 	},
 	resolve: {

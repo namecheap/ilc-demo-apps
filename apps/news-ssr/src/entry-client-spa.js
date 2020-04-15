@@ -1,6 +1,6 @@
 import Vue from 'vue';
 //import singleSpaVue from 'single-spa-vue' FIXME: this should be updated with forked library in NPM
-import singleSpaVue from '../../../adapters/vuejs'
+import singleSpaVue from 'ilc-adapter-vue'
 import App from './App.vue'
 import { createRouter } from "./router";
 import { createStore } from "./store";

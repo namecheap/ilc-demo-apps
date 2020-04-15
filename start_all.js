@@ -1,6 +1,12 @@
 const fs = require('fs');
 const concurrently = require('concurrently');
 
+let runCmd = 'npm start';
+const myCmd = process.argv.slice(2).join(' ');
+if (myCmd.includes('--dev') || myCmd.includes('-D')) {
+    runCmd = 'npm run dev';
+}
+
 const commands = [];
 
 fs.readdirSync('./apps').forEach(fileName => {
@@ -9,7 +15,7 @@ fs.readdirSync('./apps').forEach(fileName => {
         return;
     }
 
-    commands.push({ command: `cd ./apps/${fileName}/ && npm run dev`, name: fileName });
+    commands.push({ command: `cd ./apps/${fileName}/ && ${runCmd}`, name: fileName });
 });
 
 concurrently(commands, {

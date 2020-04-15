@@ -10,7 +10,7 @@ const clientManifestSpa = require('./dist/vue-ssr-client-manifest-spa.json');
 const template = fs.readFileSync('./src/index.template.html', 'utf-8');
 const templateFragment = fs.readFileSync('./src/index.fragment.template.html', 'utf-8');
 const cors = require('cors');
-const PORT = 3000;
+const PORT = 8239;
 
 const server = express();
 
@@ -82,7 +82,7 @@ server.get('*', (req, res) => {
 
 });
 
-const port = PORT || 3000;
+const port = PORT || 8239;
 
 server.listen(port, () => {
     console.log("Server started")
