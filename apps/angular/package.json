@@ -10,10 +10,13 @@
     "dev:ssr": "ng run angular-starter:serve-ssr",
     "serve:ssr": "node dist/angular-starter/server/main.js",
     "build:ssr": "ng build --prod && ng run angular-starter:server:production",
-    "prerender": "ng run angular-starter:prerender"
+    "prerender": "ng run angular-starter:prerender",
+    "build:single-spa": "ng build --prod --deploy-url http://localhost:4200/",
+    "serve:single-spa": "ng serve --disable-host-check --port 4200 --deploy-url http://localhost:4200/ --live-reload false"
   },
   "private": true,
   "dependencies": {
+    "@angular-builders/custom-webpack": "^8",
     "@angular/animations": "9.0.7",
     "@angular/common": "9.0.7",
     "@angular/compiler": "9.0.7",
@@ -31,6 +34,7 @@
     "jquery": "3.4.1",
     "ng2-charts": "2.3.0",
     "rxjs": "6.5.4",
+    "single-spa-angular": "^3.3.0",
     "tslib": "1.11.1",
     "zone.js": "0.10.3"
   },
