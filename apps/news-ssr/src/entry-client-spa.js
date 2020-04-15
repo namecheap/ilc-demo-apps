@@ -87,7 +87,7 @@ export const mount = props => {
 
 	return vueLifecycles.mount(props);
 };
-export const unmount = () => {
+export const unmount = props => {
 	console.log('News unmount!!');
-	return vueLifecycles.unmount();
+	return vueLifecycles.unmount(props);
 };
