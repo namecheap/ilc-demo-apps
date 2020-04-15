@@ -12,20 +12,6 @@
     "build:ssr": "ng build --prod && ng run angular-starter:server:production",
     "prerender": "ng run angular-starter:prerender"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ganatan/angular-example-ssr.git"
-  },
-  "author": {
-    "name": "danny",
-    "email": "dannyganatan@gmail.com",
-    "url": "https://www.ganatan.com/"
-  },
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ganatan/angular-example-ssr/issues"
-  },
-  "homepage": "https://github.com/ganatan/angular-example-ssr#readme",
   "private": true,
   "dependencies": {
     "@angular/animations": "9.0.7",
