@@ -2,6 +2,8 @@
 
 ----
 
+[![Actions Status](https://github.com/namecheap/ilc-demo-apps/workflows/CI/badge.svg)](https://github.com/namecheap/ilc-demo-apps/actions)
+
 This repository contains demo Micro Frontends for 
 [Isomorphic Layout Composer (ILC)](https://github.com/namecheap/ilc).
 Please check out the [original ILC repository](https://github.com/namecheap/ilc) for more information about it.
