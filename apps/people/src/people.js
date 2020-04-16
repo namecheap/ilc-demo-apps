@@ -11,7 +11,7 @@ const reactLifecycles = singleSpaReact({
 });
 
 export const bootstrap = [
-  () => setPublicPath(),
+  (props) => setPublicPath(props.getCurrentPathProps()),
   reactLifecycles.bootstrap,
 ];
 export const mount = reactLifecycles.mount;
