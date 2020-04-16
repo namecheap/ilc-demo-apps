@@ -37,6 +37,7 @@ jobs:
         done
 
     - name: Deploy demo site
+      if: github.ref == 'refs/heads/master'
       uses: appleboy/ssh-action@v0.0.7
       with:
         host: ${{ secrets.DEMO_INSTANCE_HOST }}

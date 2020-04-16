@@ -8,9 +8,10 @@ config.devServer = {
   headers: {
     "Access-Control-Allow-Origin": "*",
   },
-}
+  disableHostCheck: true,
+};
 
-config.mode = 'development'
+config.mode = 'development';
 
 module.exports = config;
 
