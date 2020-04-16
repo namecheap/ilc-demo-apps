@@ -35,3 +35,18 @@ jobs:
             docker tag apps:tmp namecheap/ilc-demo-apps:$i
             docker push namecheap/ilc-demo-apps:$i
         done
+
+    - name: Deploy demo site
+      uses: appleboy/ssh-action@v0.0.7
+      with:
+        host: ${{ secrets.DEMO_INSTANCE_HOST }}
+        username: ec2-user
+        key: ${{ secrets.DEMO_INSTANCE_SSH_KEY }}
+        port: 22
+        script_stop: true
+        script: |
+          curl -L https://raw.githubusercontent.com/namecheap/ilc/master/docker-compose.yml -o /home/ec2-user/docker-compose.yml
+          docker-compose pull
+          docker-compose up -d
+          sleep 20
+          docker-compose run registry npm run seed
