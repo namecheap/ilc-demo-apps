@@ -9,6 +9,10 @@ This repository contains demo Micro Frontends for
 [Isomorphic Layout Composer (ILC)](https://github.com/namecheap/ilc).
 Please check out the [original ILC repository](https://github.com/namecheap/ilc) for more information about it.
 
+## Online demo
+
+http://demo.microfrontends.online/
+
 ## List of the demo Micro Frontends
 ### Applications
 1. [System](./apps/system) – written in vanilla JS, with SSR. Port: `8240`
