@@ -42,9 +42,11 @@ server.use('/manifest.json', express.static(path.resolve(__dirname, './manifest.
 
 //TODO: this should be available only in dev mode
 server.get('/_spa/dev/assets-discovery', (req, res) => {
+    const publicPath = determinePublicPath(req.query, clientManifestSpa);
+
     res.send({
-        spaBundle: clientManifestSpa.publicPath + clientManifestSpa.all.find(v => v.endsWith('.js')),
-        cssBundle: clientManifestSpa.publicPath + clientManifestSpa.all.find(v => v.endsWith('.css')),
+        spaBundle: publicPath + clientManifestSpa.all.find(v => v.endsWith('.js')),
+        cssBundle: publicPath + clientManifestSpa.all.find(v => v.endsWith('.css')),
     });
 });
 
@@ -73,7 +75,8 @@ server.get('*', (req, res) => {
                 res.append('x-head-title', Buffer.from(context.meta.inject().title.text()).toString('base64'));
                 res.append('x-head-meta', Buffer.from(context.meta.inject().meta.text()).toString('base64'));
 
-                const links = clientManifestSpa.all.filter(v => v.endsWith('.css')).map(v => `<${clientManifestSpa.publicPath}${v}>; rel="stylesheet"`);
+                const publicPath = determinePublicPath(req.query, clientManifestSpa);
+                const links = clientManifestSpa.all.filter(v => v.endsWith('.css')).map(v => `<${publicPath}${v}>; rel="stylesheet"`);
                 res.append('Link', links.join(', '));
             }
             res.send(html);
@@ -87,3 +90,17 @@ const port = PORT || 8239;
 server.listen(port, () => {
     console.log("Server started")
 });
+
+function determinePublicPath(reqQuery, webpackManifest) {
+    let publicPath = webpackManifest.publicPath;
+    if (reqQuery.appProps) {
+        try {
+            const appProps = JSON.parse(Buffer.from(reqQuery.appProps, 'base64').toString('utf-8'));
+            if (appProps.publicPath) {
+                publicPath = appProps.publicPath;
+            }
+        } catch {}
+    }
+
+    return publicPath;
+}
