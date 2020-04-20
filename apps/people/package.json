@@ -33,7 +33,7 @@
     "babel-core": "6.26.3",
     "babel-loader": "8.0.0",
     "clean-webpack-plugin": "0.1.19",
-    "copy-webpack-plugin": "^5.0.4",
+    "copy-webpack-plugin": "^5.1.1",
     "css-loader": "1.0.0",
     "kremling-loader": "0.1.1",
     "postcss-loader": "3.0.0",
