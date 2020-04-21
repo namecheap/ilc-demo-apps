@@ -65,6 +65,7 @@ export default class Root extends React.Component {
               )
             })
           }
+          <span style={{color: 'gray'}}>This navbar (React, SSR)</span>
         </div>
       )
     )
