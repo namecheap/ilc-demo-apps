@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel-node": "babel-node --presets=env",
-    "dev": "concurrently --kill-others --kill-others-on-fail --names \"server,client\" \"npm run dev:server\" \"npm run dev:client\"",
+    "dev": "cross-env NODE_ENV=development concurrently --kill-others --kill-others-on-fail --names \"server,client\" \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "nodemon --watch server.js --watch dist ./server.js",
     "dev:client": "nodemon -e js,mjs,json,vue --watch src --exec npm run build",
     "start": "cross-env NODE_ENV=production node server",

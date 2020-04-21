@@ -3,12 +3,14 @@ const webpack = require("webpack");
 const vueConfig = require('./vue.loader.config');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
+const isDev = process.env.NODE_ENV === 'development';
+
 module.exports = {
 	devtool: false,
 	output: {
 		path: path.resolve(__dirname, '../dist'),
 		publicPath: 'http://127.0.0.1:8239/dist/',
-		filename: '[name].[chunkhash].js'
+		filename: `[name]${isDev ? '' : '.[chunkhash]'}.js`
 	},
 	resolve: {
 		alias: {
@@ -55,7 +57,7 @@ module.exports = {
 			}),
 			new webpack.optimize.ModuleConcatenationPlugin(),
 			new ExtractTextPlugin({
-				filename: 'common.[chunkhash].css'
+				filename: `common${isDev ? '' : '.[chunkhash]'}.css`
 			})
 		]
 };
