@@ -27,7 +27,7 @@ export default class Films extends React.Component {
         switchMap(films => from(films)),
         tap(() => this.setState({films: []})),
         mergeMap(film => {
-          return getFilm(film.match(/[0-9]+/))
+          return getFilm(film.match(/([0-9]+)\/$/)[1])
         }),
       ).subscribe(
         (film) => {

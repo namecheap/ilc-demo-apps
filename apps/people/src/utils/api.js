@@ -12,7 +12,7 @@ export function getPlanet(id) {
 
 export function getFilm(filmId) {
   return fetchWithCache(
-    `films/${filmId}`
+    `films/${filmId}/`
   )
 }
 

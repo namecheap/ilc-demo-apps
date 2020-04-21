@@ -58,7 +58,7 @@ export default {
     },
     fetchResidents: function () {
       this.residents.forEach((residentUrl) => {
-        const number = residentUrl.match(/[0-9]+/)
+        const number = residentUrl.match(/([0-9]+)\/$/)[1]
         this.fetchResident(number)
       })
     },

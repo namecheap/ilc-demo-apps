@@ -23,7 +23,7 @@ export default class Homeworld extends React.Component {
         }),
         flatMap(
           (homeworldUrl) => {
-            return getPlanet(homeworldUrl.match(/[0-9]+/))
+            return getPlanet(homeworldUrl.match(/([0-9]+)\/$/)[1])
           }
         )
       ).subscribe(
