@@ -55,7 +55,7 @@ module.exports = {
 			}),
 			new webpack.optimize.ModuleConcatenationPlugin(),
 			new ExtractTextPlugin({
-				filename: 'common.[chunkhash].css'
+				filename: 'common.css'
 			})
 		]
 };
