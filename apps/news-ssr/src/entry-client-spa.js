@@ -1,15 +1,10 @@
 import Vue from 'vue';
 import singleSpaVue from 'ilc-adapter-vue'
 import App from './App.vue'
-import { createRouter } from './router';
-import { createStore } from './store';
-import VueMeta from 'vue-meta';
+import { createApp } from "./app";
 
+const { router, store } = createApp();
 
-Vue.use(VueMeta, {
-	// optional pluginOptions
-	refreshOnceOnNavigation: true
-});
 
 const vueMixin = {
 	beforeRouteUpdate (to, from, next) {
@@ -24,9 +19,6 @@ const vueMixin = {
 		}
 	}
 };
-
-const store = createStore();
-const router = createRouter();
 
 const createBeforeResolveRouterHandler = (appId) => (to, from, next) => {
 	if (window[`__${appId}__`]) { // We don't need to fetch data from server if we were loaded with SSR
