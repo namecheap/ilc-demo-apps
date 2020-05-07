@@ -6,7 +6,6 @@ const path = require('path');
 const {createBundleRenderer} = require('vue-server-renderer');
 const bundle = require('./dist/vue-ssr-server-bundle.json');
 const clientManifestSpa = require('./dist/vue-ssr-client-manifest-spa.json');
-const template = fs.readFileSync('./src/index.template.html', 'utf-8');
 const templateFragment = fs.readFileSync('./src/index.fragment.template.html', 'utf-8');
 const cors = require('cors');
 const PORT = 8239;
@@ -43,7 +42,7 @@ server.get('*', (req, res) => {
 
     const context = {
         url: ilcData.getCurrentBasePath() + ilcData.getCurrentReqUrl(), //TODO: correct base path handling
-        fragmentName: ilcData.getCurrentPathProps().fragmentName,
+        appId: ilcData.appId,
     };
 
     renderer.renderToString(context, (err, html) => {

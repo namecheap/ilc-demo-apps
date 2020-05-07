@@ -11,7 +11,7 @@ Vue.use(VueMeta, {
 	refreshOnceOnNavigation: true
 });
 
-Vue.mixin({
+const vueMixin = {
 	beforeRouteUpdate (to, from, next) {
 		const { asyncData } = this.$options;
 		if (asyncData) {
@@ -23,14 +23,14 @@ Vue.mixin({
 			next()
 		}
 	}
-});
+};
 
 const store = createStore();
 const router = createRouter();
 
 const createBeforeResolveRouterHandler = (props) => (to, from, next) => {
-	if (window[`__${props.name}__`]) { // We don't need to fetch data from server if we were loaded with SSR
-		delete window[`__${props.name}__`];
+	if (window[`__${props.appId}__`]) { // We don't need to fetch data from server if we were loaded with SSR
+		delete window[`__${props.appId}__`];
 		return next();
 	}
 
@@ -65,6 +65,7 @@ const replaceState = (props) => {
 const vueLifecycles = singleSpaVue({
 	Vue,
 	appOptions: {
+		mixins: [vueMixin],
 		render: h => h(App),
 		router,
 		store,
