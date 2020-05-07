@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import singleSpaVue from 'ilc-adapter-vue'
 import App from './App.vue'
-import { createRouter } from "./router";
-import { createStore } from "./store";
-import VueMeta from "vue-meta";
+import { createRouter } from './router';
+import { createStore } from './store';
+import VueMeta from 'vue-meta';
 
 
 Vue.use(VueMeta, {
@@ -28,9 +28,9 @@ const vueMixin = {
 const store = createStore();
 const router = createRouter();
 
-const createBeforeResolveRouterHandler = (props) => (to, from, next) => {
-	if (window[`__${props.appId}__`]) { // We don't need to fetch data from server if we were loaded with SSR
-		delete window[`__${props.appId}__`];
+const createBeforeResolveRouterHandler = (appId) => (to, from, next) => {
+	if (window[`__${appId}__`]) { // We don't need to fetch data from server if we were loaded with SSR
+		delete window[`__${appId}__`];
 		return next();
 	}
 
@@ -56,9 +56,9 @@ const createBeforeResolveRouterHandler = (props) => (to, from, next) => {
 		.catch(next)
 };
 
-const replaceState = (props) => {
-    if(window[`__${props.name}__`]) {
-        store.replaceState(window[`__${props.name}__`]);
+const replaceState = (appId) => {
+    if(window[`__${appId}__`]) {
+        store.replaceState(window[`__${appId}__`]);
     }
 };
 
@@ -75,7 +75,7 @@ const vueLifecycles = singleSpaVue({
 export const bootstrap = (props) => {
     console.log('News bootstrap!!');
 
-    router.beforeResolve(createBeforeResolveRouterHandler(props));
+    router.beforeResolve(createBeforeResolveRouterHandler(props.appId));
 
     return vueLifecycles.bootstrap(props);
 };
@@ -83,7 +83,7 @@ export const bootstrap = (props) => {
 export const mount = props => {
     console.log('News mount!!');
 
-    replaceState(props);
+    replaceState(props.appId);
 
 	return vueLifecycles.mount(props);
 };
