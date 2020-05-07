@@ -24,7 +24,7 @@ const wpModule = {
 			test: /\.(png|jpg|gif|svg)$/,
 			loader: 'url-loader',
 			options: {
-				limit: 10000,
+				limit: 10,
 				name: '[name].[ext]?[hash]'
 			}
 		},

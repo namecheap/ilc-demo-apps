@@ -31,7 +31,6 @@ const appAssets = {
 };
 
 server.use('/dist', express.static(path.resolve(__dirname, './dist')));
-server.use('/public', express.static(path.resolve(__dirname, './public')));
 server.use('/manifest.json', express.static(path.resolve(__dirname, './manifest.json')));
 
 //TODO: this should be available only in dev mode
