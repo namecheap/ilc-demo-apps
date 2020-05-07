@@ -28,36 +28,28 @@ const rendererFragment = createBundleRenderer(bundle, {
     inject: false
 });
 
-server.use((req, res, next) => {
-    if (req.headers['x-request-uri'] !== undefined) {
-        req.url = req.headers['x-request-uri'];
-    }
-
-    next();
-});
+const IlcSdk = require('ilc-server-sdk').default;
+const ilcSdk = new IlcSdk({ publicPath: clientManifestSpa.publicPath });
+const appAssets = {
+    spaBundle: clientManifestSpa.all.find(v => v.endsWith('.js')),
+    cssBundle: clientManifestSpa.all.find(v => v.endsWith('.css'))
+};
 
 server.use('/dist', express.static(path.resolve(__dirname, './dist')));
 server.use('/public', express.static(path.resolve(__dirname, './public')));
 server.use('/manifest.json', express.static(path.resolve(__dirname, './manifest.json')));
 
 //TODO: this should be available only in dev mode
-server.get('/_spa/dev/assets-discovery', (req, res) => {
-    const publicPath = determinePublicPath(req.query, clientManifestSpa);
-
-    res.send({
-        spaBundle: publicPath + clientManifestSpa.all.find(v => v.endsWith('.js')),
-        cssBundle: publicPath + clientManifestSpa.all.find(v => v.endsWith('.css')),
-    });
-});
+server.get('/_spa/dev/assets-discovery', (req, res) => ilcSdk.assetsDiscoveryHandler(req, res, appAssets));
 
 server.get('*', (req, res) => {
     res.setHeader("Content-Type", "text/html");
 
-    const routerProps = JSON.parse(Buffer.from(req.query.routerProps, 'base64').toString('utf8'));
+    const ilcData = ilcSdk.processRequest(req);
 
     const context = {
-        url: req.url,
-        fragmentName: routerProps.fragmentName,
+        url: ilcData.getCurrentReqUrl(),
+        fragmentName: ilcData.getCurrentPathProps().fragmentName,
     };
 
     const currRenderer = !!req.query.fragment ? rendererFragment : renderer;
@@ -72,12 +64,11 @@ server.get('*', (req, res) => {
             }
         } else {
             if (req.query.fragment !== undefined && typeof context.renderStyles === 'function') {
-                res.append('x-head-title', Buffer.from(context.meta.inject().title.text()).toString('base64'));
-                res.append('x-head-meta', Buffer.from(context.meta.inject().meta.text()).toString('base64'));
-
-                const publicPath = determinePublicPath(req.query, clientManifestSpa);
-                const links = clientManifestSpa.all.filter(v => v.endsWith('.css')).map(v => `<${publicPath}${v}>; rel="stylesheet"`);
-                res.append('Link', links.join(', '));
+                ilcSdk.processResponse(ilcData, res, {
+                    pageTitle: context.meta.inject().title.text(),
+                    pageMetaTags: context.meta.inject().meta.text(),
+                    appAssets,
+                });
             }
             res.send(html);
         }
@@ -90,17 +81,3 @@ const port = PORT || 8239;
 server.listen(port, () => {
     console.log("Server started")
 });
-
-function determinePublicPath(reqQuery, webpackManifest) {
-    let publicPath = webpackManifest.publicPath;
-    if (reqQuery.appProps) {
-        try {
-            const appProps = JSON.parse(Buffer.from(reqQuery.appProps, 'base64').toString('utf-8'));
-            if (appProps.publicPath) {
-                publicPath = appProps.publicPath;
-            }
-        } catch {}
-    }
-
-    return publicPath;
-}
