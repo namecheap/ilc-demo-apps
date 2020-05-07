@@ -5,7 +5,6 @@ const fs = require('fs');
 const path = require('path');
 const {createBundleRenderer} = require('vue-server-renderer');
 const bundle = require('./dist/vue-ssr-server-bundle.json');
-const clientManifest = require('./dist/vue-ssr-client-manifest.json');
 const clientManifestSpa = require('./dist/vue-ssr-client-manifest-spa.json');
 const template = fs.readFileSync('./src/index.template.html', 'utf-8');
 const templateFragment = fs.readFileSync('./src/index.fragment.template.html', 'utf-8');
@@ -16,12 +15,8 @@ const server = express();
 
 server.use(cors());
 
+
 const renderer = createBundleRenderer(bundle, {
-    template: template,
-    clientManifest: clientManifest,
-    runInNewContext: false
-});
-const rendererFragment = createBundleRenderer(bundle, {
     template: templateFragment,
     clientManifest: clientManifestSpa,
     runInNewContext: false,
@@ -48,13 +43,11 @@ server.get('*', (req, res) => {
     const ilcData = ilcSdk.processRequest(req);
 
     const context = {
-        url: ilcData.getCurrentReqUrl(),
+        url: ilcData.getCurrentBasePath() + ilcData.getCurrentReqUrl(), //TODO: correct base path handling
         fragmentName: ilcData.getCurrentPathProps().fragmentName,
     };
 
-    const currRenderer = !!req.query.fragment ? rendererFragment : renderer;
-
-    currRenderer.renderToString(context, (err, html) => {
+    renderer.renderToString(context, (err, html) => {
         if (err) {
             if (err.code === 404) {
                 res.status(400).send('Not found');
