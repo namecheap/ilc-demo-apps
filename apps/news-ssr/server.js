@@ -6,17 +6,14 @@ const path = require('path');
 const {createBundleRenderer} = require('vue-server-renderer');
 const bundle = require('./dist/vue-ssr-server-bundle.json');
 const clientManifestSpa = require('./dist/vue-ssr-client-manifest-spa.json');
-const templateFragment = fs.readFileSync('./src/index.fragment.template.html', 'utf-8');
-const cors = require('cors');
 const PORT = 8239;
 
 const server = express();
-
-server.use(cors());
+server.use(require('cors')());
 
 
 const renderer = createBundleRenderer(bundle, {
-    template: templateFragment,
+    template: fs.readFileSync('./src/index.template.html', 'utf-8'),
     clientManifest: clientManifestSpa,
     runInNewContext: false,
     inject: false
@@ -30,7 +27,6 @@ const appAssets = {
 };
 
 server.use('/dist', express.static(path.resolve(__dirname, './dist')));
-server.use('/manifest.json', express.static(path.resolve(__dirname, './manifest.json')));
 
 //TODO: this should be available only in dev mode
 server.get('/_spa/dev/assets-discovery', (req, res) => ilcSdk.assetsDiscoveryHandler(req, res, appAssets));
@@ -54,21 +50,17 @@ server.get('*', (req, res) => {
                 res.status(500).send('Internal server error');
             }
         } else {
-            if (req.query.fragment !== undefined && typeof context.renderStyles === 'function') {
-                ilcSdk.processResponse(ilcData, res, {
-                    pageTitle: context.meta.inject().title.text(),
-                    pageMetaTags: context.meta.inject().meta.text(),
-                    appAssets,
-                });
-            }
+            ilcSdk.processResponse(ilcData, res, {
+                pageTitle: context.meta.inject().title.text(),
+                pageMetaTags: context.meta.inject().meta.text(),
+                appAssets,
+            });
             res.send(html);
         }
     });
 
 });
 
-const port = PORT || 8239;
-
-server.listen(port, () => {
+server.listen(PORT, () => {
     console.log("Server started")
 });
