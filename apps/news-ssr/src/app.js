@@ -13,12 +13,12 @@ export function createApp () {
 		refreshOnceOnNavigation: true
 	});
 	
-	const app = new Vue({
+	const initApp = () => new Vue({
 		
 		router,
 		store,
 		render: h => h(App)
 		
 	});
-	return { app, router, store }
+	return { initApp, router, store }
 }

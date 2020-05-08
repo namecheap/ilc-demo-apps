@@ -1,18 +1,12 @@
 import Vue from 'vue';
-//import singleSpaVue from 'single-spa-vue' FIXME: this should be updated with forked library in NPM
 import singleSpaVue from 'ilc-adapter-vue'
 import App from './App.vue'
-import { createRouter } from "./router";
-import { createStore } from "./store";
-import VueMeta from "vue-meta";
+import { createApp } from "./app";
+
+const { router, store } = createApp();
 
 
-Vue.use(VueMeta, {
-	// optional pluginOptions
-	refreshOnceOnNavigation: true
-});
-
-Vue.mixin({
+const vueMixin = {
 	beforeRouteUpdate (to, from, next) {
 		const { asyncData } = this.$options;
 		if (asyncData) {
@@ -24,14 +18,11 @@ Vue.mixin({
 			next()
 		}
 	}
-});
+};
 
-const store = createStore();
-const router = createRouter();
-
-const createBeforeResolveRouterHandler = (props) => (to, from, next) => {
-	if (window[`__${props.name}__`]) { // We don't need to fetch data from server if we were loaded with SSR
-		delete window[`__${props.name}__`];
+const createBeforeResolveRouterHandler = (appId) => (to, from, next) => {
+	if (window[`__${appId}__`]) { // We don't need to fetch data from server if we were loaded with SSR
+		delete window[`__${appId}__`];
 		return next();
 	}
 
@@ -57,15 +48,16 @@ const createBeforeResolveRouterHandler = (props) => (to, from, next) => {
 		.catch(next)
 };
 
-const replaceState = (props) => {
-    if(window[`__${props.name}__`]) {
-        store.replaceState(window[`__${props.name}__`]);
+const replaceState = (appId) => {
+    if(window[`__${appId}__`]) {
+        store.replaceState(window[`__${appId}__`]);
     }
 };
 
 const vueLifecycles = singleSpaVue({
 	Vue,
 	appOptions: {
+		mixins: [vueMixin],
 		render: h => h(App),
 		router,
 		store,
@@ -75,7 +67,7 @@ const vueLifecycles = singleSpaVue({
 export const bootstrap = (props) => {
     console.log('News bootstrap!!');
 
-    router.beforeResolve(createBeforeResolveRouterHandler(props));
+    router.beforeResolve(createBeforeResolveRouterHandler(props.appId));
 
     return vueLifecycles.bootstrap(props);
 };
@@ -83,7 +75,7 @@ export const bootstrap = (props) => {
 export const mount = props => {
     console.log('News mount!!');
 
-    replaceState(props);
+    replaceState(props.appId);
 
 	return vueLifecycles.mount(props);
 };

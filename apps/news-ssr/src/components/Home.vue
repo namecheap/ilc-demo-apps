@@ -1,6 +1,7 @@
 <template>
     <div>
         <div class="banner">
+            <img class="logo" :src="logoImage" alt="logo">
             <h1>Pick a news source</h1>
             <a href="#" v-on:click="generateError">Generate error!</a>
         </div>
@@ -21,7 +22,13 @@
 </template>
 
 <script>
+    import logoImage from '../assets/logo.png';
 	export default {
+        data: function () {
+            return {
+                logoImage: logoImage
+            }
+        },
 		asyncData ({ store, route }) {
 			// return the Promise from the action
 			return store.dispatch('fetchSources');
@@ -60,6 +67,10 @@
         font-weight: 900;
         max-width: 1000px;
         margin: auto;
+    }
+    .banner .logo {
+        margin: 0 auto;
+        display: block
     }
     .sources{
         background-color: #F1EDEC;

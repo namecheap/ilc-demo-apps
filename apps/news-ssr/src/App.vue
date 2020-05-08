@@ -23,23 +23,6 @@
         font-family: Lato, sans-serif;
         font-weight: 300;
     }
-    .header{
-        background-color: #515E7E;
-        padding: 1.5rem 1rem;
-        text-align: center;
-    }
-    .container-nav{
-        max-width: 1000px;
-        margin: auto;
-    }
-    .brand{
-        font-size: 2rem;
-        line-height: 1.5;
-        font-weight: 900;
-        color: #F1EDEC;
-        display: inline-block;
-        margin-right: 5rem;
-    }
     nav.inner{
         display: inline-block;
     }
