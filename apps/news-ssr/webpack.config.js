@@ -22,10 +22,9 @@ const wpModule = {
 		},
 		{
 			test: /\.(png|jpg|gif|svg)$/,
-			loader: 'url-loader',
+			loader: 'file-loader',
 			options: {
-				limit: 10,
-				name: '[name].[ext]?[hash]'
+				name: '[name].[ext]?[hash]',
 			}
 		},
 		{

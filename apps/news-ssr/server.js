@@ -35,10 +35,12 @@ server.get('*', (req, res) => {
     res.setHeader("Content-Type", "text/html");
 
     const ilcData = ilcSdk.processRequest(req);
+    const props = ilcData.getCurrentPathProps();
 
     const context = {
         url: ilcData.getCurrentBasePath() + ilcData.getCurrentReqUrl(), //TODO: correct base path handling
         appId: ilcData.appId,
+        publicPath: props.publicPath,
     };
 
     renderer.renderToString(context, (err, html) => {

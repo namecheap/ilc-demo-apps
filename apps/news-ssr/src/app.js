@@ -20,5 +20,5 @@ export function createApp () {
 		render: h => h(App)
 		
 	});
-	return { initApp, router, store }
+	return { initApp, router, store, App }
 }
