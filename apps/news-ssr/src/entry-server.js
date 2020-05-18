@@ -1,7 +1,12 @@
-import { createApp } from "./app";
-
 export default context => {
+	if (context.publicPath) {
+		__webpack_public_path__ = context.publicPath;
+	} else {
+		console.warn(`Can't determine value of the "__webpack_public_path__", falling back to default one...`);
+	}
 	
+	const  { createApp } = require('./app');
+
 	return new Promise((resolve, reject) => {
 		
 		const { initApp, router, store } = createApp();
