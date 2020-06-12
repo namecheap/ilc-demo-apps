@@ -12,9 +12,7 @@
     "postinstall": "npm run install-all"
   },
   "license": "Apache-2.0",
-  "dependencies": {
-    "cross-env": "^7.0.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "concurrently": "4.0.1"
   }

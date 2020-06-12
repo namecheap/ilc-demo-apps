@@ -12,7 +12,6 @@
   "author": "Justin McMurdie",
   "license": "ISC",
   "dependencies": {
-    "cross-env": "^7.0.2",
     "ilc-adapter-vue": "^1.9.1",
     "rxjs": "6.3.3",
     "serve": "^11.3.0",

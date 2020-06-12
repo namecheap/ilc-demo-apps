@@ -13,7 +13,6 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.0",
-    "cross-env": "^7.0.2",
     "serve": "^11.3.0",
     "wrapper-webpack-plugin": "^2.1.0"
   },
