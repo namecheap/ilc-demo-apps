@@ -1,5 +1,4 @@
 const {API} = require('axios-client');
-const NEWS_API = "97c568e8528f40be944a8c047aef2210";
 
 const client = API();
 
@@ -51,5 +50,5 @@ export function fetchSources() {
 }
 
 export function fetchHeadlines(source) {
-    return fetch('https://news-api-proxy.herokuapp.com/v1/articles', {source: source, apiKey: NEWS_API});
+    return fetch('https://news-api-proxy.herokuapp.com/v1/articles', {source});
 }
