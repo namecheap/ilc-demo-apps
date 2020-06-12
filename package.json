@@ -4,15 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "install-all": "node run_all.js npm i",
-    "start": "node start_all.js",
-    "dev": "node start_all.js --dev",
-    "build:all": "node run_all.js npm run build",
-    "postinstall": "npm run install-all"
+    "test": "cross-env echo \"Error: no test specified\" && exit 1",
+    "install-all": "cross-env node run_all.js npm i",
+    "start": "cross-env node start_all.js",
+    "dev": "cross-env node start_all.js --dev",
+    "build:all": "cross-env node run_all.js npm run build",
+    "postinstall": "cross-env npm run install-all"
   },
   "license": "Apache-2.0",
-  "dependencies": {},
+  "dependencies": {
+    "cross-env": "^7.0.2"
+  },
   "devDependencies": {
     "concurrently": "4.0.1"
   }

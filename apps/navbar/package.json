@@ -4,18 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "NODE_ENV=development nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build:client && npm run build:server",
-    "build:client": "webpack --config webpack.config.js --progress --hide-modules",
-    "build:server": "webpack --config webpack.server.js --progress --hide-modules"
+    "start": "cross-env node server.js",
+    "dev": "cross-env NODE_ENV=development nodemon server.js",
+    "test": "cross-env echo \"Error: no test specified\" && exit 1",
+    "build": "cross-env npm run build:client && npm run build:server",
+    "build:client": "cross-env webpack --config webpack.config.js --progress --hide-modules",
+    "build:server": "cross-env webpack --config webpack.server.js --progress --hide-modules"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@reach/router": "1.2.1",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
