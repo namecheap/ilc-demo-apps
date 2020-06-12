@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env node server.js",
+    "start": "node server.js",
     "dev": "cross-env NODE_ENV=development nodemon server.js",
-    "test": "cross-env echo \"Error: no test specified\" && exit 1",
-    "build": "cross-env npm run build:client && npm run build:server",
-    "build:client": "cross-env webpack --config webpack.config.js --progress --hide-modules",
-    "build:server": "cross-env webpack --config webpack.server.js --progress --hide-modules"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "webpack --config webpack.config.js --progress --hide-modules",
+    "build:server": "webpack --config webpack.server.js --progress --hide-modules"
   },
   "author": "",
   "license": "ISC",
