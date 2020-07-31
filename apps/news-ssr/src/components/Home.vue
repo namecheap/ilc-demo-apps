@@ -4,6 +4,10 @@
             <img class="logo" :src="logoImage" alt="logo">
             <h1>Pick a news source</h1>
             <a href="#" v-on:click="generateError">Generate error!</a>
+            <br>
+            <router-link :to="'/news/nonExisting'">Go to non existing route</router-link>
+            <br/>
+            <router-link :to="'/news/article/abc-news-au34'">Go to non existing API resource</router-link>
         </div>
         <div class="sources">
             <div class="container">

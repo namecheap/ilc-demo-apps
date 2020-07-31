@@ -45,18 +45,15 @@ server.get('*', (req, res) => {
 
     renderer.renderToString(context, (err, html) => {
         if (err) {
-            if (err.code === 404) {
-                res.status(400).send('Not found');
-            } else {
-                console.log(err);
-                res.status(500).send('Internal server error');
-            }
+            console.log(err);
+            res.status(500).send('Internal server error');
         } else {
             ilcSdk.processResponse(ilcData, res, {
                 pageTitle: context.meta.inject().title.text(),
                 pageMetaTags: context.meta.inject().meta.text(),
                 appAssets,
             });
+            res.status(context.statusCode);
             res.send(html);
         }
     });

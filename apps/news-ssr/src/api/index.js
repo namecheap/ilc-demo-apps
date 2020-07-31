@@ -12,7 +12,6 @@ function cacheSources() {
 }
 
 function fetch(url, params = null) {
-
     const cache = client.cachedItems;
 
     let key;
@@ -38,9 +37,7 @@ function fetch(url, params = null) {
                     reject("News API error: " + res.data.message);
                 }
 
-            }).catch((err) => {
-                reject("Axios issue: " + err)
-            })
+            }).catch(reject);
         });
     }
 }

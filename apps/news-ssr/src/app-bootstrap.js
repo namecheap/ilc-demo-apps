@@ -44,7 +44,12 @@ const createBeforeResolveRouterHandler = (appId) => (to, from, next) => {
 		.then(() => {
 			next();
 		})
-		.catch(next)
+		.catch(err => {
+			if (err.code === 404 || (err.response && [404, 400].includes(err.response.status))) { //we have 400 alongside 404 as news api responds with 400 instead of 404
+				return next({ name: '404', params: [to.path], replace: true });
+			}
+			next(err);
+		})
 };
 
 const replaceState = (appId) => {
