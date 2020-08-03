@@ -12,7 +12,6 @@ function cacheSources() {
 }
 
 function fetch(url, params = null) {
-
     const cache = client.cachedItems;
 
     let key;
@@ -38,17 +37,15 @@ function fetch(url, params = null) {
                     reject("News API error: " + res.data.message);
                 }
 
-            }).catch((err) => {
-                reject("Axios issue: " + err)
-            })
+            }).catch(reject);
         });
     }
 }
 
 export function fetchSources() {
-    return fetch('https://news-api-proxy.herokuapp.com/v1/sources');
+    return fetch('https://news-api-cache.s3.us-west-1.amazonaws.com/v1/sources');
 }
 
 export function fetchHeadlines(source) {
-    return fetch('https://news-api-proxy.herokuapp.com/v1/articles', {source});
+    return fetch(`https://news-api-cache.s3.us-west-1.amazonaws.com/v1/articles/${source}`);
 }
