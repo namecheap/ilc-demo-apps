@@ -43,9 +43,9 @@ function fetch(url, params = null) {
 }
 
 export function fetchSources() {
-    return fetch('https://news-api-proxy.herokuapp.com/v1/sources');
+    return fetch('https://news-api-cache.s3.us-west-1.amazonaws.com/v1/sources');
 }
 
 export function fetchHeadlines(source) {
-    return fetch('https://news-api-proxy.herokuapp.com/v1/articles', {source});
+    return fetch(`https://news-api-cache.s3.us-west-1.amazonaws.com/v1/articles/${source}`);
 }
