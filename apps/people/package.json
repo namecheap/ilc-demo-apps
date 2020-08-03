@@ -17,7 +17,7 @@
     "query-string": "6.1.0",
     "react-router": "4.3.1",
     "react-router-dom": "4.3.1",
-    "serve": "^11.3.0",
+    "serve": "^11.3.2",
     "single-spa-react": "^2.10.2",
     "wrapper-webpack-plugin": "^2.1.0"
   },
@@ -39,7 +39,7 @@
     "postcss-loader": "3.0.0",
     "style-loader": "0.23.0",
     "webpack": "^4.30.0",
-    "webpack-cli": "3.1.0",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   }
 }
