@@ -81,8 +81,8 @@ export const mount = props => {
     console.log('News mount!!');
 
     // TODO: should be moved to Vue adapter
-	// It ensures "clean start" for every Vue app mount
-	// Otherwise it would first attempt to render route that was rendered before unmount
+    // It ensures "clean start" for every Vue app mount
+    // Otherwise it would first attempt to render route that was rendered before unmount
     router.history.updateRoute(START);
     replaceState(props.appId);
 
