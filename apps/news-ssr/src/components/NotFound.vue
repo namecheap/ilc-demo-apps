@@ -8,7 +8,7 @@
             title: 'News - Not found',
         },
         beforeMount() {
-            if (window.location.search.indexOf('overrideErrorPage') !== -1) {
+            if (window.location.search.includes('overrideErrorPage')) {
                 return;
             }
             window.dispatchEvent(new CustomEvent('ilc:404', {

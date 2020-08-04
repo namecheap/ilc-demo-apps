@@ -47,6 +47,8 @@ const createBeforeResolveRouterHandler = (appId) => (to, from, next) => {
 		})
 		.catch(err => {
 			if (err.code === 404 || (err.response && [404, 400].includes(err.response.status))) { //we have 400 alongside 404 as news api responds with 400 instead of 404
+				//TODO: see https://github.com/vuejs/vue-router/issues/977 It explains issue with history
+				// Possible solution: https://github.com/raniesantos/vue-error-page
 				return next({ name: '404', params: [to.path], query: to.query, replace: true });
 			}
 			next(err);

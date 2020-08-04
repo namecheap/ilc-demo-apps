@@ -54,7 +54,7 @@ server.get('*', (req, res) => {
                 appAssets,
             });
             res.status(context.statusCode);
-            if (context.url.indexOf('overrideErrorPage') !== -1) {
+            if (context.url.includes('overrideErrorPage')) {
                 res.header('X-ILC-Override', 'error-page-content');
             }
             res.send(html);
