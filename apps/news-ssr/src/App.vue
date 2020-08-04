@@ -1,8 +1,6 @@
 <template>
     <div class="single-spa-container news-app">
-        <transition name="fade" mode="out-in">
-            <router-view class="view"></router-view>
-        </transition>
+        <router-view class="view"></router-view>
     </div>
 </template>
 
