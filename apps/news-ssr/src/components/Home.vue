@@ -7,7 +7,11 @@
             <br>
             <router-link :to="'/news/nonExisting'">Go to non existing route</router-link>
             <br/>
+            <router-link :to="'/news/nonExisting?overrideErrorPage=1'">Go to non existing route (w/o global 404 handler)</router-link>
+            <br/>
             <router-link :to="'/news/article/abc-news-au34'">Go to non existing API resource</router-link>
+            <br/>
+            <router-link :to="'/news/article/abc-news-au34?overrideErrorPage=1'">Go to non existing API resource (w/o global 404 handler)</router-link>
         </div>
         <div class="sources">
             <div class="container">
