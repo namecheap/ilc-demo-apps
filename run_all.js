@@ -19,9 +19,12 @@ fs.readdirSync('./apps').forEach(fileName => {
 });
 
 commands.forEach(cmd => {
-   console.log('');
-   console.log('');
-   console.log(`Executing command for "${cmd.name}"... Calling: ${cmd.command}`);
-   console.log('');
-   spawnSync(cmd.command, {shell: true, timeout: 120000, killSignal: 'SIGKILL', stdio: 'inherit'});
+    console.log('');
+    console.log('');
+    console.log(`Executing command for "${cmd.name}"... Calling: ${cmd.command}`);
+    console.log('');
+    const res = spawnSync(cmd.command, {shell: true, timeout: 120000, killSignal: 'SIGKILL', stdio: 'inherit'});
+    if (res.status !== 0) {
+        throw new Error(`Error during command "${cmd.command}" execution. Exited with non-zero code "${res.status}".`);
+    }
 });
