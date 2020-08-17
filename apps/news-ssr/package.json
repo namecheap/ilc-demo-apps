@@ -18,7 +18,7 @@
     "cors": "^2.8.5",
     "cross-env": "^5.2.1",
     "express": "^4.16.2",
-    "ilc-adapter-vue": "^1.9.1",
+    "ilc-adapter-vue": "^1.9.2",
     "ilc-server-sdk": "^1.2.0",
     "lru-cache": "^4.1.1",
     "single-spa-vue": "^1.8.2",
