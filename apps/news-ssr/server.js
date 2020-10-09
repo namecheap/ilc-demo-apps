@@ -38,7 +38,7 @@ server.get('*', (req, res) => {
     const props = ilcData.getCurrentPathProps();
 
     const context = {
-        url: ilcData.getCurrentBasePath() + ilcData.getCurrentReqUrl(), //TODO: correct base path handling
+        url: ilcData.getCurrentReqOriginalUri(), //TODO: correct base path handling
         appId: ilcData.appId,
         publicPath: props.publicPath,
     };
