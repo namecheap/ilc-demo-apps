@@ -1,22 +1,10 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import singleSpaReact from 'single-spa-react'
-import RootComponent from './root.component.js'
+export const mainSpa = (props) => {
+    if (props.publicPath) {
+        __webpack_public_path__ = props.publicPath;
+    } else {
+        console.warn(`Can't determine value of the "__webpack_public_path__", falling back to default one...`);
+    }
 
-const reactLifecycles = singleSpaReact({
-  React,
-  ReactDOM,
-  rootComponent: RootComponent,
-  renderType: 'hydrate',
-});
 
-export const bootstrap = reactLifecycles.bootstrap;
-export const mount = props => {
-    console.log('Navbar mount');
-    return reactLifecycles.mount(props);
+    return require('./single-spa');
 };
-export const unmount = props => {
-    console.log('Navbar unmount');
-    return reactLifecycles.unmount(props);
-};
-export const unload = reactLifecycles.unload;

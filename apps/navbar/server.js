@@ -3,11 +3,13 @@
 const express = require('express');
 const cors = require('cors');
 
+const IlcSdk = require('ilc-server-sdk').default;
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 const {default: App} = require('./build/server');
 const PORT = 8235;
 
+const ilcSdk = new IlcSdk();
 const server = express();
 
 if (process.env.NODE_ENV === 'development') {
@@ -28,20 +30,20 @@ if (process.env.NODE_ENV === 'development') {
     server.use(express.static('build'));
 }
 
-server.use((req, res, next) => {
-    if (req.headers['x-request-uri'] !== undefined) {
-        req.url = req.headers['x-request-uri'];
+server.get('*', (req, res) => {
+    res.setHeader('Content-Type', 'text/html');
+    const ilcReqData = ilcSdk.processRequest(req);
+
+    let links;
+    try {
+        links = require(`./src/links/${ilcReqData.intl.get().locale}.json`);
+    } catch {
+        links = require(`./src/links/${ilcReqData.intl.getDefault().locale}.json`);
     }
 
-    next();
-});
+    const html = ReactDOMServer.renderToString(App(ilcReqData, ilcReqData.getCurrentReqOriginalUri(), links));
 
-server.get('*', (req, res) => {
-    res.setHeader("Content-Type", "text/html");
-
-    const html = ReactDOMServer.renderToString(App(req.url));
-    res.send(html);
-
+    res.send(`<script type="application/messages">${JSON.stringify(links)}</script><div class="app-container">${html}</div>`);
 });
 
 const port = PORT || 3000;

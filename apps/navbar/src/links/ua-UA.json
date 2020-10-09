@@ -1,0 +1,18 @@
+[
+    {
+        "name": "Люди (React, Без SSR)",
+        "href": "/people"
+    },
+    {
+        "name": "Планети (Vue, Без SSR)",
+        "href": "/planets"
+    },
+    {
+        "name": "Новини (Vue, SSR)",
+        "href": "/news/"
+    },
+    {
+        "name": "404 (Pure JS, SSR)",
+        "href": "/nosuchpath"
+    }
+]
