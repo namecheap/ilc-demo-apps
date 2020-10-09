@@ -1,7 +1,7 @@
 <template>
   <router-link
     class="planet"
-    :to="`/planets/${planet.id}/attributes`"
+    :to="{name: 'attributes', params: {...this.$route.params, id: planet.id}}"
   >
     {{planet.name}}
   </router-link>

@@ -17,7 +17,8 @@ export const createRouter = () => {
 				children: [
 					{ path: 'news/', component: Home }, // () => import('../components/Home.vue')
 					{ path: 'news/article/:source', component: Articles}, // () => import('../components/Articles.vue')
-				] },
+				]
+			},
 			{ path: '*', name: '404', component: NotFound }
 		]
 	});
