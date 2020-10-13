@@ -19,7 +19,7 @@ const renderer = createBundleRenderer(bundle, {
     inject: false
 });
 
-const IlcSdk = require('ilc-server-sdk').default;
+const IlcSdk = require('ilc-sdk').default;
 const ilcSdk = new IlcSdk({ publicPath: clientManifestSpa.publicPath });
 const appAssets = {
     spaBundle: clientManifestSpa.all.find(v => v.endsWith('.js')),

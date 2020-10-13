@@ -3,7 +3,7 @@
 import React from 'react'
 import { ServerLocation } from '@reach/router'
 import App from './root.component';
-import IlcAppSdk from 'ilc-server-sdk/dist/client';
+import IlcAppSdk from 'ilc-sdk/dist/app';
 
 export default function (ilcReqData, url, links = []) {
     const clientSdk = new IlcAppSdk(ilcReqData);

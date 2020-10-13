@@ -3,7 +3,7 @@
 const express = require('express');
 const cors = require('cors');
 
-const IlcSdk = require('ilc-server-sdk').default;
+const IlcSdk = require('ilc-sdk').default;
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 const {default: App} = require('./build/server');
