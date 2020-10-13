@@ -4,9 +4,9 @@ const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
-const WrapperPlugin = require('wrapper-webpack-plugin');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
 
 const wpModule = {
 	noParse: /es6-promise\.js$/,
@@ -71,11 +71,7 @@ module.exports = [{ //client
 		new VueSSRClientPlugin({
 			filename: 'vue-ssr-client-manifest-spa.json'
 		}),
-		new WrapperPlugin({ //TODO: replace with ilc-sdk
-			test: /\.js$/, // only wrap output of bundle files with '.js' extension
-			header: '(function(define){\n',
-			footer: '\n})((window.ILC && window.ILC.define) || window.define);'
-		}),
+		...ilcWebpackPluginsFactory(),
 	]
 },{ //server
 	mode: process.env.NODE_ENV,
