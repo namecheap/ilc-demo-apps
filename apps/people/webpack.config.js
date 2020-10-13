@@ -81,7 +81,7 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: path.resolve(__dirname, 'src/people.js')}
         ]),
-        new WrapperPlugin({
+        new WrapperPlugin({ //TODO: replace with ilc-sdk
             test: /\.js$/, // only wrap output of bundle files with '.js' extension
             header: '(function(define){\n',
             footer: '\n})((window.ILC && window.ILC.define) || window.define);'
