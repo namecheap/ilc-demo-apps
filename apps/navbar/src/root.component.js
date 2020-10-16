@@ -17,27 +17,24 @@ const NavLink = props => (
 );
 
 export default class Root extends React.Component {
+    constructor(props) {
+        super(props);
 
-    state = {
-        hasError: false,
-        links: this.props.links || []
-    };
+        let state = {
+            hasError: false,
+            links: this.props.links || []
+        };
 
-    componentDidCatch(error, info) {
-        this.setState({hasError: true})
-    }
-
-    componentWillMount() {
-        // SSR flow, this prop only present at SSR
+        //SSR flow
         if (this.props.links) {
-            this.setState({links: this.props.links});
+            this.state = state;
             return;
         }
 
-        // CSR flow
+        //CSR flow
         const appMessagesEl = this.props.domElementGetter().previousSibling;
         if (appMessagesEl.type === 'application/messages') {
-            this.setState({links: JSON.parse(appMessagesEl.innerHTML)});
+            state.links = JSON.parse(appMessagesEl.innerHTML);
             appMessagesEl.parentElement.removeChild(appMessagesEl);
         } else {
             const lang = this.props.appSdk.intl.get().locale;
@@ -45,6 +42,12 @@ export default class Root extends React.Component {
                 this.setState({links: v.default});
             });
         }
+
+        this.state = state;
+    }
+
+    componentDidCatch(error, info) {
+        this.setState({hasError: true})
     }
 
     componentDidMount() {
