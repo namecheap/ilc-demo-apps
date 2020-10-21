@@ -20,7 +20,7 @@
                         <div><span>{{source.category}}</span><span>{{source.language}}</span></div>
                         <h2>{{source.name}}</h2>
                         <p>{{source.description}}</p>
-                        <p class="action"><router-link :to="'article/' + source.id">Get Headlines</router-link></p>
+                        <p class="action"><router-link :to="'/news/article/' + source.id">Get Headlines</router-link></p>
                         <!--<p><a :href="'article/'+source.id"></a></p>-->
                     </li>
                 </ol>
