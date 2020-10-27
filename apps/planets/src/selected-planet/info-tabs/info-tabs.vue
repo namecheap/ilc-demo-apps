@@ -4,7 +4,7 @@
       <router-link
         class='tabLink'
         active-class='active'
-        :to="{name: 'attributes', params: {selectedPlanet:selectedPlanet}}"
+        :to="{name: 'attributes', params: {...this.$route.params, selectedPlanet:selectedPlanet}}"
         >
         <div>
           Attributes
@@ -13,7 +13,7 @@
       <router-link
         class='tabLink'
         active-class='active'
-        :to="{name: 'people', params: {selectedPlanet:selectedPlanet}}"
+        :to="{name: 'people', params: {...this.$route.params, selectedPlanet:selectedPlanet}}"
         >
         <div>
           People
@@ -22,7 +22,7 @@
       <router-link
         class='tabLink'
         active-class='active'
-        :to="{name: 'todo'}"
+        :to="{name: 'todo', params: this.$route.params}"
         >
         <div>
           Todo

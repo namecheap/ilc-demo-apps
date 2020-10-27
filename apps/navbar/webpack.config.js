@@ -1,6 +1,6 @@
 /* eslint-env node */
 const path = require('path');
-const WrapperPlugin = require('wrapper-webpack-plugin');
+const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
 
 
 module.exports = {
@@ -27,13 +27,7 @@ module.exports = {
             'node_modules',
         ],
     },
-    plugins: [
-        new WrapperPlugin({
-            test: /\.js$/, // only wrap output of bundle files with '.js' extension
-            header: '(function(define){\n',
-            footer: '\n})((window.ILC && window.ILC.define) || window.define);'
-        }),
-    ],
+    plugins: ilcWebpackPluginsFactory(),
     devtool: 'source-map',
     externals: [
         /^single-spa$/,
