@@ -3,11 +3,9 @@
 import React from 'react'
 import { ServerLocation } from '@reach/router'
 import App from './root.component';
-import IlcAppSdk from 'ilc-sdk/app';
 
-export default function (ilcReqData, url, links = []) {
-    const clientSdk = new IlcAppSdk(ilcReqData);
+export default function (appSdk, url, links = []) {
     return (
-        <ServerLocation url={url}><App appSdk={clientSdk} links={links}/></ServerLocation>
+        <ServerLocation url={url}><App appSdk={appSdk} links={links}/></ServerLocation>
     );
 }

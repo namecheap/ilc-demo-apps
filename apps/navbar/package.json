@@ -18,7 +18,7 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
-    "ilc-sdk": "^2.0.0-alpha.4",
+    "ilc-sdk": "^2.0.0-alpha.7",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "single-spa-react": "^2.10.2"
