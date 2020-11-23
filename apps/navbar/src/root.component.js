@@ -51,7 +51,7 @@ export default class Root extends React.Component {
     }
 
     componentDidMount() {
-        this.props.appSdk.intl.watch((e) => {
+        this.props.appSdk.intl.onChange((e) => {
             const langModule = import(`./links/${e.detail.locale}.json`);
             e.detail.addPendingResources(langModule);
             Promise.all([langModule, e.detail.onAllResourcesReady()]).then(([v]) => {
