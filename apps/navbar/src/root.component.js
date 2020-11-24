@@ -52,9 +52,8 @@ export default class Root extends React.Component {
 
     componentDidMount() {
         this.props.appSdk.intl.onChange((e) => {
-            const langModule = import(`./links/${e.detail.locale}.json`);
-            e.detail.addPendingResources(langModule);
-            Promise.all([langModule, e.detail.onAllResourcesReady()]).then(([v]) => {
+            const langModule = e.addPendingResources([ import(`./links/${e.locale}.json`) ]);
+            langModule.then(([v]) => {
                 this.setState({links: v.default});
             }).catch(() => {}); // Error handling happens at ILC side.
         });
