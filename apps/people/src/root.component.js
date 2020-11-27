@@ -15,12 +15,15 @@ export default class Root extends React.Component {
     }
 
     componentDidMount() {
-        this.props.appSdk.intl.watch(() => {
-            this.setState({
-                basename: this.props.appSdk.intl.localizeUrl(this.props.getCurrentBasePath()),
-                routerKey: Math.random()
-            });
-        });
+        this.props.appSdk.intl.onChange(
+            () => {},
+            () => {
+                this.setState({
+                    basename: this.props.appSdk.intl.localizeUrl(this.props.getCurrentBasePath()),
+                    routerKey: Math.random()
+                });
+            }
+        );
     }
 
     render() {

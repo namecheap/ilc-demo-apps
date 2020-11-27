@@ -1,5 +1,6 @@
-import React from 'react'
-import { Link } from '@reach/router'
+import React from 'react';
+import { Link } from '@reach/router';
+import NativeListener from 'react-native-listener';
 
 const NavLink = props => (
     <Link
@@ -51,12 +52,18 @@ export default class Root extends React.Component {
     }
 
     componentDidMount() {
-        this.props.appSdk.intl.onChange((e) => {
-            const langModule = e.addPendingResources([ import(`./links/${e.locale}.json`) ]);
-            langModule.then(([v]) => {
-                this.setState({links: v.default});
-            }).catch(() => {}); // Error handling happens at ILC side.
-        });
+        this.props.appSdk.intl.onChange(
+            (e) => import(`./links/${e.locale}.json`),
+            (e, langModule) => {
+                this.setState({links: langModule.default});
+            }
+        );
+    }
+
+    changeLocale(locale, e) {
+        e.preventDefault();
+
+        this.props.appSdk.intl.set({ locale });
     }
 
     render() {
@@ -86,6 +93,11 @@ export default class Root extends React.Component {
                             .navbar-app .primary-navigation-link:first-child {
                                 margin-left: 32px;
                             }
+                            
+                            .navbar-app .lang-selector {
+                                margin-left: auto;
+                                margin-right: 30px;
+                            }
                             `
                     }}/>
                     {
@@ -100,6 +112,16 @@ export default class Root extends React.Component {
                         })
                     }
                     <span style={{color: 'gray'}}>This navbar (React, SSR)</span>
+
+                    <div className='lang-selector'>
+                        <NativeListener onClick={this.changeLocale.bind(this, 'en-US')}>
+                            <a href="#" style={{color: 'white'}}>EN</a>
+                        </NativeListener>
+                        /
+                        <NativeListener onClick={this.changeLocale.bind(this, 'ua-UA')}>
+                            <a href="#" style={{color: 'white'}}>UA</a>
+                        </NativeListener>
+                    </div>
                 </div>
             )
         )
