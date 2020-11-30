@@ -19,7 +19,7 @@ const renderer = createBundleRenderer(bundle, {
     inject: false
 });
 
-const IlcSdk = require('ilc-server-sdk').default;
+const IlcSdk = require('ilc-sdk').default;
 const ilcSdk = new IlcSdk({ publicPath: clientManifestSpa.publicPath });
 const appAssets = {
     spaBundle: clientManifestSpa.all.find(v => v.endsWith('.js')),
@@ -38,7 +38,7 @@ server.get('*', (req, res) => {
     const props = ilcData.getCurrentPathProps();
 
     const context = {
-        url: ilcData.getCurrentBasePath() + ilcData.getCurrentReqUrl(), //TODO: correct base path handling
+        url: ilcData.getCurrentReqOriginalUri(), //TODO: correct base path handling
         appId: ilcData.appId,
         publicPath: props.publicPath,
     };

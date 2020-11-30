@@ -6,32 +6,35 @@ import Todo from './todo/todo.vue'
 
 const routes = [
   {
-    path: '/planets',
-    component: PlanetPage,
-  },
-  {
-    path: '/planets/:id',
-    component: PlanetPage,
+    path: '/:lang?',
+    component: { render (c) { return c('router-view') } },
     children: [
+      { path: 'planets', component: PlanetPage },
       {
-        name: 'attributes',
-        path: 'attributes',
-        component: Attributes,
-        props: true,
-      },
-      {
-        name: 'people',
-        path: 'people',
-        component: People,
-        props: true,
-      },
-      {
-        name: 'todo',
-        path: 'todo',
-        component: Todo,
+        path: 'planets/:id',
+        component: PlanetPage,
+        children: [
+          {
+            name: 'attributes',
+            path: 'attributes',
+            component: Attributes,
+            props: true,
+          },
+          {
+            name: 'people',
+            path: 'people',
+            component: People,
+            props: true,
+          },
+          {
+            name: 'todo',
+            path: 'todo',
+            component: Todo,
+          }
+        ]
       }
     ]
-  }
+  },
 ]
 
 const router = new VueRouter({mode: 'history', routes})
