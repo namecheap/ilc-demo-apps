@@ -2,15 +2,16 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const WrapperPlugin = require('wrapper-webpack-plugin');
+const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
 
 
 module.exports = {
-    entry: path.resolve(__dirname, 'src/people.js'),
+    entry: path.resolve(__dirname, 'src/client-entry.js'),
     output: {
         filename: 'people.js',
         libraryTarget: 'amd',
         path: path.resolve(__dirname, 'build'),
+        jsonpFunction: 'wpPeopleApp', // We need this to avoid conflicts of on-demand chunks in the global namespace
     },
     mode: 'production',
     module: {
@@ -81,11 +82,7 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: path.resolve(__dirname, 'src/people.js')}
         ]),
-        new WrapperPlugin({ //TODO: replace with ilc-sdk
-            test: /\.js$/, // only wrap output of bundle files with '.js' extension
-            header: '(function(define){\n',
-            footer: '\n})((window.ILC && window.ILC.define) || window.define);'
-        }),
+        ...ilcWebpackPluginsFactory()
     ],
     devtool: 'source-map',
     externals: [

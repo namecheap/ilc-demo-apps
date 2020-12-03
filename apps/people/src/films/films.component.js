@@ -1,8 +1,7 @@
 import React, {Fragment} from 'react'
 import AsyncDecorator from 'async-decorator/rx6'
 import { Scoped } from 'kremling'
-import { find } from 'lodash'
-import { pipe, from, operators } from 'rxjs'
+import { from, operators } from 'rxjs'
 const { tap, mergeMap, switchMap } = operators
 import styles from './films.krem.css'
 import { getFilm } from '../utils/api.js'

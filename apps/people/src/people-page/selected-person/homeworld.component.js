@@ -1,7 +1,7 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import AsyncDecorator from 'async-decorator/rx6'
 import { getPlanet } from '../../utils/api.js'
-import { pipe, from, operators } from 'rxjs'
+import { operators } from 'rxjs'
 const { flatMap, tap } = operators
 import { Link } from 'react-router-dom'
 
@@ -55,12 +55,12 @@ export default class Homeworld extends React.Component {
         }
         {
           homeworld && (
-            <Link
+            <a
               className='brand-link'
-              to={`/planets/${homeworld.id}/attributes`}
+              href={`/planets/${homeworld.id}/attributes`}
             >
               {homeworld.name}
-            </Link>
+            </a>
 
           )
         }

@@ -9,6 +9,7 @@ module.exports = {
         filename: 'navbar.js',
         libraryTarget: 'amd',
         path: path.resolve(__dirname, 'build'),
+        jsonpFunction: 'wpNavbarApp', // We need this to avoid conflicts of on-demand chunks in the global namespace
     },
     mode: 'production',
     module: {
