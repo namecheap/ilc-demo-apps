@@ -3,12 +3,12 @@
 const express = require('express');
 const cors = require('cors');
 
-const IlcSdk = require('ilc-sdk').default;
+const { IlcAppWrapperSdk } = require('ilc-sdk');
 const ReactDOMServer = require('react-dom/server');
 const {default: App} = require('./build/server-entry');
 const PORT = 8234;
 
-const ilcSdk = new IlcSdk();
+const ilcSdk = new IlcAppWrapperSdk();
 const server = express();
 
 if (process.env.NODE_ENV === 'development') {
@@ -32,17 +32,16 @@ if (process.env.NODE_ENV === 'development') {
 server.get('*', (req, res) => {
     res.setHeader('Content-Type', 'text/html');
     const ilcReqData = ilcSdk.processRequest(req);
-    let propsOverride;
+    let propsOverride = null;
+    const renderApp = props => propsOverride = props;
 
     const serverLocation = new URL(`https://${ilcReqData.getCurrentReqHost()}${ilcReqData.getCurrentReqOriginalUri()}`);
-    const renderApp = props => propsOverride = props;
     const html = ReactDOMServer.renderToString(App({ serverLocation, renderApp }));
 
     ilcSdk.processResponse(ilcReqData, res, {});
 
-    if (propsOverride !== undefined) {
-        res.header('x-props-override', Buffer.from(JSON.stringify(propsOverride)).toString('base64'));
-        return res.status(210).send();
+    if (propsOverride !== null) {
+        return ilcSdk.forwardRequest(ilcReqData, res, { propsOverride });
     }
 
     res.send(`<div class="app-container">${html}</div>`);
