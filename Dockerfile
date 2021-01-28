@@ -1,6 +1,6 @@
 FROM node:12-alpine
 
-EXPOSE 8240 8239 8238 8237 8236 8235
+EXPOSE 8240 8239 8238 8237 8236 8235 8234
 
 RUN apk --no-cache add --virtual builds-deps build-base python
 

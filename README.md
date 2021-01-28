@@ -20,6 +20,7 @@ http://demo.microfrontends.online/
 1. [Navigation](./apps/navbar) – written in React, with SSR. Port: `8235`
 1. [People](./apps/people) – written in React, no SSR. Port: `8236`
 1. [Planets](./apps/planets) – written in Vue.js, no SSR. Port: `8237`
+1. [Wrapper](./apps/wrapper) – written in React, with SSR. Port: `8234`. Showcases App Wrappers functionality.
 
 ### Services
 1. [fetchWithCache](./apps/fetchWithCache) (used by News & People). Port: `8238`
@@ -28,7 +29,7 @@ http://demo.microfrontends.online/
 ## Quick start
 
 1. Clone the repo
-1. Run `docker run --rm -it -p 8235-8240:8235-8240 namecheap/ilc-demo-apps`
+1. Run `docker run --rm -it -p 8234-8240:8234-8240 namecheap/ilc-demo-apps`
     * Optionally you build your own Docker image with `docker build -t namecheap/ilc-demo-apps:latest .`
 1. Open `127.0.0.1` at respective ports to see apps running.
 
