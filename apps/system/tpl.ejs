@@ -9,6 +9,21 @@
     <p>
         This particular area was written on Vanilla JS using Lodash template while Navbar is written on React.
     </p>
+<% } else if (getCurrentPathProps().page === 'wrapped') { %>
+    <h1>Welcome to target app that is hidden under App Wrapper.</h1>
+    <p>
+        You can see it now as Wrapper App immediately initiates target app rendering if it sees special query parameter.
+        <br>
+        This functionality works well with client side rendering and SSR (see what comes from server with & without query parameter).
+    </p>
+    <p>
+        App Wrappers are useful if you want to extract some bootstrap, loading or authorization functionality from different apps and
+        being able to control it from a single place.
+    </p>
+    <p>
+        App Wrappers can also pass additional props to target app. See props this app received now:
+        <pre><%- JSON.stringify(getCurrentPathProps(), null, 2) %></pre>
+    </p>
 <% } else { %>
     <h1>Unexpected error</h1>
 <% } %>
