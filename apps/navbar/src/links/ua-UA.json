@@ -1,15 +1,19 @@
 [
     {
-        "name": "Люди (React, Без SSR)",
+        "name": "React, Без SSR",
         "href": "/people"
     },
     {
-        "name": "Планети (Vue, Без SSR)",
+        "name": "Vue, Без SSR",
         "href": "/planets"
     },
     {
-        "name": "Новини (Vue, SSR)",
+        "name": "Vue, З SSR",
         "href": "/news/"
+    },
+    {
+        "name": "App Wrapper (React + Чистий JS, SSR)",
+        "href": "/wrapper/"
     },
     {
         "name": "404 (Чистий JS, SSR)",
