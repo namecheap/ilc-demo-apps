@@ -9,7 +9,7 @@ module.exports = {
         libraryTarget: 'amd',
         path: path.resolve(__dirname, 'build'),
     },
-    mode: 'development',
+    mode: 'production',
     module: {
         rules: [
             {parser: {System: false}},
