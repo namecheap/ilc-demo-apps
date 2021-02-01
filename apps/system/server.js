@@ -31,9 +31,6 @@ if (process.env.NODE_ENV === 'development') {
 app.get('/fragment', (req, res) => {
     const appProps = JSON.parse(Buffer.from(req.query.appProps, 'base64').toString('utf8'));
 
-    if (appProps._statusCode === '404') {
-        res.status(404);
-    }
     res.send(`<div data-ssr-content="true">${pageTpl({getCurrentPathProps: () => appProps})}</div>`);
 });
 
