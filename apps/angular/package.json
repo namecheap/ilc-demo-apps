@@ -6,14 +6,16 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration=production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "dev:ssr": "ng run angular.io-example:serve-ssr",
     "serve:ssr": "node dist/angular.io-example/server/main.js",
     "build:ssr": "ng build --prod && ng run angular.io-example:server:production",
-    "prerender": "ng run angular.io-example:prerender"
+    "prerender": "ng run angular.io-example:prerender",
+    "build:single-spa": "ng build --prod --deploy-url http://localhost:4200/",
+    "serve:single-spa": "ng s --disable-host-check --port 8241 --deploy-url http://localhost:8241/ --live-reload false"
   },
   "private": true,
   "dependencies": {
@@ -30,10 +32,13 @@
     "angular-in-memory-web-api": "~0.11.0",
     "express": "^4.15.2",
     "rxjs": "~6.6.0",
+    "single-spa": ">=4.0.0",
+    "single-spa-angular": "^4.9.2",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "11.0.1-beta.1",
     "@angular-devkit/build-angular": "~0.1100.2",
     "@angular/cli": "~11.0.2",
     "@angular/compiler-cli": "~11.0.1",
