@@ -16,6 +16,10 @@
         "href": "/wrapper/"
     },
     {
+        "name": "Transition Hooks (Чистий JS, SSR)",
+        "href": "/hooks/"
+    },
+    {
         "name": "404 (Чистий JS, SSR)",
         "href": "/nosuchpath"
     }
