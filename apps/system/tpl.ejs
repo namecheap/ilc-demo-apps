@@ -1,3 +1,18 @@
+<style>
+    .system-link {
+        margin-bottom: 16px;
+        background-color: var(--orange);
+        color: var(--white);
+        border-style: none;
+        text-align: center;
+        cursor: pointer;
+        padding: 8px;
+        text-decoration: none;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 13px;
+    }
+</style>
+
 <% if (getCurrentPathProps()._statusCode === '404') { %>
     <h1>404 not found</h1>
 <% } else if (getCurrentPathProps().page === 'home') { %>
@@ -24,6 +39,18 @@
         App Wrappers can also pass additional props to target app. See props this app received now:
         <pre><%- JSON.stringify(getCurrentPathProps(), null, 2) %></pre>
     </p>
+<% } else if (getCurrentPathProps().page === 'hooks') { %>
+    <h1>Welcome to Transition Hooks entry page.</h1>
+    <p>
+        This page shows how transition hooks work on ILC.
+    </p>
+    <a class="system-link" href="/hooks/protected/">Go to Transition Hooks protected page</a>
+<% } else if (getCurrentPathProps().page === 'hooks-protected') { %>
+    <h1>Welcome to Transition Hooks protected page.</h1>
+    <p>
+        You can see this page only when all transition hooks allow you to see this page.
+    </p>
+    <a class="system-link" href="/hooks/">Go to Transition Hooks entry page</a>
 <% } else { %>
     <h1>Unexpected error</h1>
 <% } %>

@@ -12,8 +12,12 @@
         "href": "/news/"
     },
     {
-        "name": "App Wrapper (React + Чистий JS, SSR)",
+        "name": "Обгортка додатку (React + Чистий JS, SSR)",
         "href": "/wrapper/"
+    },
+    {
+        "name": "Гачки переходів (Чистий JS, SSR)",
+        "href": "/hooks/"
     },
     {
         "name": "404 (Чистий JS, SSR)",
