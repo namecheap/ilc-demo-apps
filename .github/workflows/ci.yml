@@ -51,4 +51,4 @@ jobs:
           docker-compose pull
           docker-compose up -d
           sleep 20
-          docker-compose run -e OVERRIDE_CONFIG_TRUSTED_ORIGINS=all PUBLIC_HOST=demo.microfrontends.online registry npm run seed
+          docker-compose run -e OVERRIDE_CONFIG_TRUSTED_ORIGINS=all -e PUBLIC_HOST=demo.microfrontends.online registry npm run seed
