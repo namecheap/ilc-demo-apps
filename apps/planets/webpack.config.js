@@ -14,7 +14,7 @@ module.exports = {
     mode: 'production',
     module: {
         rules: [
-            {parser: {System: false}},
+            {parser: {system: false}},
             {
                 test: /\.vue$/,
                 loader: 'vue-loader'
