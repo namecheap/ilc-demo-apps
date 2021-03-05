@@ -8,13 +8,13 @@ import { Link } from 'react-router-dom'
 export default class PeopleList extends React.Component {
 
   render () {
-    const { people, loadingPeople, selectPerson } = this.props
+    const { people, loadingPeople } = this.props
     return (
       <Scoped postcss={styles}>
         <div className='peopleList'>
           <Fragment>
             {
-              people.map((person, index) => {
+              people.map((person) => {
                 return (
                   <Link
                     key={person.name}
