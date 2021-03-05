@@ -1,6 +1,5 @@
 import React, {Fragment} from 'react'
 import { Scoped } from 'kremling'
-import { getPeople } from '../utils/api.js'
 import styles from './people-list.krem.css'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
