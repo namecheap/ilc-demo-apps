@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
-//import singleSpaVue from 'single-spa-vue' FIXME: this should be updated with forked library in NPM
 import singleSpaVue from 'ilc-adapter-vue'
 import configuredRouter from './router.js'
 
