@@ -2,7 +2,7 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const WrapperPlugin = require('wrapper-webpack-plugin');
+const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
 
 
 module.exports = {
@@ -34,12 +34,9 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: path.resolve(__dirname, 'src/fetchWithCache.js')}
         ]),
-        new WrapperPlugin({
-            test: /\.js$/, // only wrap output of bundle files with '.js' extension
-            header: '(function(define){\n',
-            footer: '\n})((window.ILC && window.ILC.define) || window.define);'
+        ...ilcWebpackPluginsFactory({
+            publicPathDetection: { systemjsModuleName: '@portal/fetchWithCache' }
         }),
-
     ],
     devtool: 'source-map',
     externals: [

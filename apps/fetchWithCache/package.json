@@ -13,8 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
-    "serve": "^11.3.2",
-    "wrapper-webpack-plugin": "^2.1.0"
+    "ilc-sdk": "^2.4.1",
+    "serve": "^11.3.2"
   },
   "devDependencies": {
     "@babel/core": "7.0.0",
