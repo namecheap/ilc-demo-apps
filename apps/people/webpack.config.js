@@ -88,7 +88,9 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: path.resolve(__dirname, 'src/people.js')}
         ]),
-        ...ilcWebpackPluginsFactory()
+        ...ilcWebpackPluginsFactory({
+            publicPathDetection: { systemjsModuleName: '@portal/people' }
+        })
     ],
     devtool: 'source-map',
     externals: [

@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "async-decorator": "0.3.0",
-    "ilc-sdk": "^2.1.0",
+    "ilc-sdk": "^2.4.1",
     "kremling": "1.0.4",
     "query-string": "6.1.0",
     "react-router": "4.3.1",
