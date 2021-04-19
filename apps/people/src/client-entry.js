@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import singleSpaReact from './adapter/single-spa-react'
+import singleSpaReact from 'ilc-adapter-react'
 import { property } from 'lodash'
 
 const reactLifecycles = singleSpaReact({

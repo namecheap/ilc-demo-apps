@@ -13,13 +13,13 @@
   "license": "ISC",
   "dependencies": {
     "async-decorator": "0.3.0",
+    "ilc-adapter-react": "^1.0.0-alpha.2",
     "ilc-sdk": "^2.4.1",
     "kremling": "1.0.4",
     "query-string": "6.1.0",
     "react-router": "4.3.1",
     "react-router-dom": "4.3.1",
-    "serve": "^11.3.2",
-    "single-spa-react": "^4.1.0"
+    "serve": "^11.3.2"
   },
   "devDependencies": {
     "@babel/core": "7.0.0",
@@ -33,7 +33,6 @@
     "babel-core": "6.26.3",
     "babel-loader": "8.0.0",
     "clean-webpack-plugin": "0.1.19",
-    "copy-webpack-plugin": "^5.1.1",
     "css-loader": "1.0.0",
     "kremling-loader": "0.1.1",
     "postcss-loader": "3.0.0",
