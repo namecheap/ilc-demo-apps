@@ -14,7 +14,7 @@
 </style>
 
 <% if (getCurrentPathProps()._statusCode === '404') { %>
-    <h1>404 not found</h1>
+    <h1><%= getCurrentPathProps().title || '404 not found' %></h1>
 <% } else if (getCurrentPathProps().page === 'home') { %>
     <h1>Hi! Welcome to our Demo website.</h1>
     <p>
