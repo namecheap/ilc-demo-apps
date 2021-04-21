@@ -34,13 +34,13 @@ export default function singleSpaHtml(opts) {
     let mountedObjects = {};
 
     return {
-        bootstrap: bootstrap.bind(null, opts),
+        bootstrap: bootstrap.bind(null),
         mount: mount.bind(null, opts, mountedObjects),
         unmount: unmount.bind(null, opts, mountedObjects)
     };
 }
 
-function bootstrap(opts, props) {
+function bootstrap() {
     return Promise.resolve();
 }
 
@@ -54,7 +54,7 @@ function mount(opts, mountedObjects, props) {
             );
         }
 
-        mountedObjects.domEl = domEl;
+        mountedObjects[props.name] = domEl;
 
         if (domEl.firstElementChild && domEl.firstElementChild.hasAttribute('data-ssr-content')) {
             return;
@@ -66,10 +66,13 @@ function mount(opts, mountedObjects, props) {
 
 function unmount(opts, mountedObjects, props) {
     return Promise.resolve().then(() => {
-        if (mountedObjects.domEl) {
-            mountedObjects.domEl.innerHTML = '';
-            delete mountedObjects.domEl;
+        const mountedEl = mountedObjects[props.name];
+        if (!mountedEl) {
+            return;
         }
+
+        mountedEl.innerHTML = '';
+        delete mountedObjects[props.name];
     });
 }
 
