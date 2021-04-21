@@ -1,20 +1,22 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const WrapperPlugin = require('wrapper-webpack-plugin');
+const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
 
 
 module.exports = {
     entry: path.resolve(__dirname, 'src/planets.js'),
     output: {
         filename: 'planets.js',
-        libraryTarget: 'amd',
+        libraryTarget: 'system',
         path: path.resolve(__dirname, 'build'),
+        jsonpFunction: 'wpPlanetsApp', // We need this to avoid conflicts of on-demand chunks in the global namespace
+        devtoolNamespace: 'planetsApp',
     },
     mode: 'production',
     module: {
         rules: [
-            {parser: {System: false}},
+            {parser: {system: false}},
             {
                 test: /\.vue$/,
                 loader: 'vue-loader'
@@ -36,12 +38,9 @@ module.exports = {
     plugins: [
         new VueLoaderPlugin(),
         new CleanWebpackPlugin(['build/planets']),
-        new WrapperPlugin({ //TODO: replace with ilc-sdk
-            test: /\.js$/, // only wrap output of bundle files with '.js' extension
-            header: '(function(define){\n',
-            footer: '\n})((window.ILC && window.ILC.define) || window.define);'
+        ...ilcWebpackPluginsFactory({
+            publicPathDetection: { systemjsModuleName: '@portal/planets' }
         }),
-
     ],
     devtool: 'source-map',
     externals: [

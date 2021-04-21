@@ -1,15 +1,14 @@
-import VueRouter from 'vue-router'
-import PlanetPage from './planet-page.vue'
-import Attributes from './selected-planet/info-tabs/attributes.vue'
-import People from './selected-planet/info-tabs/people.vue'
-import Todo from './todo/todo.vue'
+import VueRouter from 'vue-router';
+import PlanetPage from './planet-page.vue';
+import Attributes from './selected-planet/info-tabs/attributes.vue';
+import People from './selected-planet/info-tabs/people.vue';
 
 const routes = [
   {
     path: '/:lang?',
     component: { render (c) { return c('router-view') } },
     children: [
-      { path: 'planets', component: PlanetPage },
+      { path: 'planets', component: PlanetPage, name: 'planets-root' },
       {
         path: 'planets/:id',
         component: PlanetPage,
@@ -25,11 +24,6 @@ const routes = [
             path: 'people',
             component: People,
             props: true,
-          },
-          {
-            name: 'todo',
-            path: 'todo',
-            component: Todo,
           }
         ]
       }

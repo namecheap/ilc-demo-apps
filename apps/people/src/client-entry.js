@@ -1,10 +1,14 @@
-export const mainSpa = (props) => {
-    if (props.publicPath) {
-        __webpack_public_path__ = props.publicPath;
-    } else {
-        console.warn(`Can't determine value of the "__webpack_public_path__", falling back to default one...`);
+import React from 'react';
+import singleSpaReact from 'ilc-adapter-react';
+
+export default {
+    ...singleSpaReact({
+        loadRootComponent: () => import('./root.component.js').then(v => v.default),
+        parcelCanUpdate: false,
+    }),
+    parcels: {
+        person: singleSpaReact({
+            loadRootComponent: () => import('./person.parcel.js').then(v => v.default),
+        })
     }
-
-
-    return require('./people');
 };

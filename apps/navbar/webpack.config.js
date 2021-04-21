@@ -4,17 +4,18 @@ const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
 
 
 module.exports = {
-    entry: path.resolve(__dirname, 'src/navbar.js'),
+    entry: path.resolve(__dirname, 'src/client.js'),
     output: {
         filename: 'navbar.js',
-        libraryTarget: 'amd',
+        libraryTarget: 'system',
         path: path.resolve(__dirname, 'build'),
         jsonpFunction: 'wpNavbarApp', // We need this to avoid conflicts of on-demand chunks in the global namespace
+        devtoolNamespace: '@portal/navbar',
     },
     mode: 'production',
     module: {
         rules: [
-            {parser: {System: false}},
+            {parser: {system: false}},
             {
                 test: /\.js?$/,
                 exclude: [path.resolve(__dirname, 'node_modules')],
@@ -28,7 +29,9 @@ module.exports = {
             'node_modules',
         ],
     },
-    plugins: ilcWebpackPluginsFactory(),
+    plugins: ilcWebpackPluginsFactory({
+        publicPathDetection: { systemjsModuleName: '@portal/navbar' }
+    }),
     devtool: 'source-map',
     externals: [
         /^single-spa$/,

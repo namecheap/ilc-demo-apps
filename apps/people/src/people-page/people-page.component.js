@@ -1,12 +1,13 @@
-import React, {Fragment} from 'react'
-import AsyncDecorator from 'async-decorator/rx6'
-import { Scoped } from 'kremling'
-import queryString from 'query-string'
-import { find } from 'lodash'
-import { getPeople } from '../utils/api.js'
-import styles from './people-page.krem.css'
-import PeopleList from '../people-list/people-list.component.js'
-import SelectedPerson from './selected-person/selected-person.component.js'
+import React from 'react';
+import AsyncDecorator from 'async-decorator/rx6';
+import { Scoped } from 'kremling';
+import queryString from 'query-string';
+import { find } from 'lodash';
+
+import { getPeople } from '../utils/api.js';
+import styles from './people-page.krem.css';
+import PeopleList from '../people-list/people-list.component.js';
+import SelectedPerson from './selected-person/selected-person.component.js';
 
 @AsyncDecorator
 export default class PeoplePage extends React.Component {

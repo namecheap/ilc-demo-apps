@@ -1,7 +1,6 @@
 /* eslint-env node */
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
 
 
@@ -9,18 +8,24 @@ module.exports = {
     entry: path.resolve(__dirname, 'src/client-entry.js'),
     output: {
         filename: 'people.js',
-        libraryTarget: 'amd',
+        libraryTarget: 'system',
         path: path.resolve(__dirname, 'build'),
         jsonpFunction: 'wpPeopleApp', // We need this to avoid conflicts of on-demand chunks in the global namespace
+        devtoolNamespace: 'peopleApp',
     },
     mode: 'production',
     module: {
         rules: [
-            {parser: {System: false}},
+            {parser: {system: false}},
             {
                 test: /\.js?$/,
                 exclude: [path.resolve(__dirname, 'node_modules')],
                 loader: 'babel-loader',
+            },
+            {
+                test: /node_modules\/.+\.js?$/,
+                enforce: "pre",
+                use: ["source-map-loader"],
             },
             {
                 test: /\.css$/,
@@ -79,10 +84,9 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(['build/people']),
-        new CopyWebpackPlugin([
-            {from: path.resolve(__dirname, 'src/people.js')}
-        ]),
-        ...ilcWebpackPluginsFactory()
+        ...ilcWebpackPluginsFactory({
+            publicPathDetection: { systemjsModuleName: '@portal/people' }
+        })
     ],
     devtool: 'source-map',
     externals: [

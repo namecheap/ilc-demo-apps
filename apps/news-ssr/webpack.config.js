@@ -71,7 +71,11 @@ module.exports = [{ //client
 		new VueSSRClientPlugin({
 			filename: 'vue-ssr-client-manifest-spa.json'
 		}),
-		...ilcWebpackPluginsFactory(),
+		...ilcWebpackPluginsFactory({
+			publicPathDetection: {
+				systemjsModuleName: '@portal/news'
+			}
+		}),
 	]
 },{ //server
 	mode: process.env.NODE_ENV,

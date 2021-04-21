@@ -19,7 +19,7 @@
     "cross-env": "^5.2.1",
     "express": "^4.16.2",
     "ilc-adapter-vue": "^1.9.2",
-    "ilc-sdk": "^2.1.0",
+    "ilc-sdk": "^2.4.1",
     "lru-cache": "^4.1.1",
     "single-spa-vue": "^1.8.2",
     "vue": "^2.6.12",
