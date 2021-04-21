@@ -1,24 +1,14 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import singleSpaReact from 'ilc-adapter-react'
-import { property } from 'lodash'
+import React from 'react';
+import singleSpaReact from 'ilc-adapter-react';
 
-const reactLifecycles = singleSpaReact({
-    React,
-    ReactDOM,
-    loadRootComponent: () => import('./root.component.js').then(property('default')),
-    parcelCanUpdate: false,
-});
-
-export const parcels = {
-    person: singleSpaReact({
-        React,
-        ReactDOM,
-        loadRootComponent: () => import('./person.parcel.js').then(property('default')),
-    })
+export default {
+    ...singleSpaReact({
+        loadRootComponent: () => import('./root.component.js').then(v => v.default),
+        parcelCanUpdate: false,
+    }),
+    parcels: {
+        person: singleSpaReact({
+            loadRootComponent: () => import('./person.parcel.js').then(v => v.default),
+        })
+    }
 };
-
-export const bootstrap = reactLifecycles.bootstrap;
-export const mount = reactLifecycles.mount;
-export const unmount = reactLifecycles.unmount;
-export const unload = reactLifecycles.unload;

@@ -9,7 +9,13 @@ Vue.use(VueRouter);
 const vueLifecycles = singleSpaVue({
   Vue,
   appOptions: {
-    render: h => h(App),
+    render(h) {
+      return h(App, {
+        props: {
+          mountParcel: this.mountParcel,
+        }
+      })
+    },
     router: configuredRouter,
   }
 });

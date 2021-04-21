@@ -10,6 +10,7 @@ export default class PersonParcel extends React.Component {
     state = {
         id: this.props.id,
         loading: true,
+        loadingErr: undefined,
         selectedPerson: undefined,
     }
 
@@ -20,13 +21,14 @@ export default class PersonParcel extends React.Component {
     render() {
         const { selectedPerson} = this.state
         return (
-            <div className='selectedPerson'>
+            <div className="selectedPerson">
                 {
-                    this.state.loading
-                        ? <span>Loading information about selected person...</span>
-                        : <SelectedPerson
-                            selectedPerson={selectedPerson}
-                        />
+                    this.state.loadingErr
+                        ? <span>Error when loading data about selected person: {this.state.loadingErr}</span>
+                        : this.state.loading
+                            ? <span>Loading information about selected person...</span>
+                            : <SelectedPerson
+                                selectedPerson={selectedPerson}/>
                 }
             </div>
         )
@@ -41,14 +43,15 @@ export default class PersonParcel extends React.Component {
 
 
     fetchPerson = () => {
-        this.setState({loading: true}, () => {
+        this.setState({loading: true, loadingErr: undefined}, () => {
             this.props.cancelWhenUnmounted(
                 getPerson(this.state.id).subscribe(
                     (results) => {
                         this.setState({selectedPerson: results, loading: false});
                     },
                     (err => {
-                        console.log('Error when loading data about selected person', err)
+                        this.setState({loadingErr: err.message});
+                        console.warn('Error when loading data about selected person:', err)
                     })
                 )
             )

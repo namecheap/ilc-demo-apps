@@ -7,5 +7,12 @@
 </template>
 
 <script>
-  export default {}
+  export default {
+      props: ['mountParcel'],
+      provide() {
+          return {
+              mountParcel: this.mountParcel
+          }
+      }
+  }
 </script>
