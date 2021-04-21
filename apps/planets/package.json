@@ -13,12 +13,12 @@
   "license": "ISC",
   "dependencies": {
     "ilc-adapter-vue": "^1.9.1",
+    "ilc-sdk": "^2.5.0",
     "rxjs": "6.3.3",
     "serve": "^11.3.2",
     "single-spa-vue": "^2.2.0",
     "vue": "2.5.17",
-    "vue-router": "3.0.1",
-    "wrapper-webpack-plugin": "^2.1.0"
+    "vue-router": "3.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.1.2",

@@ -11,7 +11,7 @@ module.exports = {
         libraryTarget: 'system',
         path: path.resolve(__dirname, 'build'),
         jsonpFunction: 'wpPeopleApp', // We need this to avoid conflicts of on-demand chunks in the global namespace
-        devtoolNamespace: 'planetsApp',
+        devtoolNamespace: 'peopleApp',
     },
     mode: 'production',
     module: {
