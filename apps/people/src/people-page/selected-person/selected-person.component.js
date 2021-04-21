@@ -3,8 +3,14 @@ import { Scoped } from 'kremling'
 import styles from './selected-person.krem.css'
 import Homeworld from './homeworld.component.js'
 import Films from '../../films/films.component.js'
+import Parcel from 'ilc-adapter-react/parcel';
 
 export default class SelectedPerson extends React.Component {
+
+  state = {
+    planetId: 1,
+    selectedId: undefined,
+  }
 
   render () {
     const { selectedPerson } = this.props
@@ -80,6 +86,24 @@ export default class SelectedPerson extends React.Component {
             ) : (
               <div>
                 No one selected
+                <hr/>
+                <label>
+                  Demo parcel from Vue.js app, planet ID: <br/>
+                  <input type="text" value={this.state.planetId} onChange={this.handlePlanetIdChange}/>
+                  <button onClick={this.handleOpenClick}>Open</button>
+                </label>
+                {
+                  this.state.selectedId
+                      ? <div>
+                          <hr/>
+                          <Parcel
+                              loadingConfig={{appName:'@portal/planets', parcelName: 'planet'}}
+                              wrapWith="div"
+                              id={this.state.selectedId}
+                          />
+                        </div>
+                      : null
+                }
               </div>
             )
           }
@@ -91,4 +115,13 @@ export default class SelectedPerson extends React.Component {
   formatHeight = (heightInCm) => {
     return `${heightInCm}cm (${heightInCm * 0.0328084}ft)`
   }
+
+  handlePlanetIdChange = (event) => {
+    this.setState({planetId: parseInt(event.target.value)});
+  }
+
+  handleOpenClick = () => {
+      this.setState({selectedId: this.state.planetId});
+  }
+
 }

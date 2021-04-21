@@ -10,7 +10,7 @@
             No planet selected
             <hr/>
             <label>
-                Demo parcel from React app:
+                Demo parcel from React app, person ID: <br/>
                 <input type="text" v-model="peopleId"/>
                 <button @click="openDemoParcel">Open</button>
             </label>

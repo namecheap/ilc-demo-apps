@@ -6,6 +6,12 @@ export function getPlanets(pageNum = 1) {
   )
 }
 
+export function getPlanet(planetId) {
+  return fetchWithCache(
+      `planets/${planetId}`
+  )
+}
+
 export function getPerson(peronNumber) {
   return fetchWithCache(
     `people/${peronNumber}/`
