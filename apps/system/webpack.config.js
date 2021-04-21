@@ -2,14 +2,14 @@
 const path = require('path');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const WrapperPlugin = require('wrapper-webpack-plugin');
+const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
 
 
 module.exports = {
     entry: path.resolve(__dirname, 'index.js'),
     output: {
         filename: 'index.js',
-        libraryTarget: 'amd',
+        libraryTarget: 'system',
         path: path.resolve(__dirname, 'build'),
     },
     mode: 'production',
@@ -39,12 +39,9 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: path.resolve(__dirname, 'index.js')}
         ]),
-        new WrapperPlugin({ //TODO: replace with ilc-sdk
-            test: /\.js$/, // only wrap output of bundle files with '.js' extension
-            header: '(function(define){\n',
-            footer: '\n})((window.ILC && window.ILC.define) || window.define);'
+        ...ilcWebpackPluginsFactory({
+            publicPathDetection: { systemjsModuleName: '@portal/system' }
         }),
-
     ],
     devtool: 'source-map',
     externals: [],
