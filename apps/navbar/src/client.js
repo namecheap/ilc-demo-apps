@@ -4,10 +4,10 @@ import singleSpaReact from 'single-spa-react';
 import RootComponent from './root.component.js';
 
 const reactLifecycles = singleSpaReact({
-  React,
-  ReactDOM,
-  rootComponent: RootComponent,
-  renderType: 'hydrate',
+    React,
+    ReactDOM,
+    rootComponent: RootComponent,
+    renderType: 'hydrate',
 });
 
 export const bootstrap = reactLifecycles.bootstrap;
