@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "install-all": "node run_all.js npm i",
     "start": "node start_all.js",
-    "dev": "node start_all.js --dev",
+    "dev": "PUBLIC_HOST=localhost node start_all.js --dev",
     "build:all": "node run_all.js npm run build",
     "postinstall": "npm run install-all"
   },

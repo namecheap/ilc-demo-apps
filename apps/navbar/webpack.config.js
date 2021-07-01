@@ -20,7 +20,14 @@ module.exports = {
                 test: /\.js?$/,
                 exclude: [path.resolve(__dirname, 'node_modules')],
                 loader: 'babel-loader',
-            }
+            },{
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                    },
+                ],
+            },
         ],
     },
     resolve: {
@@ -29,9 +36,7 @@ module.exports = {
             'node_modules',
         ],
     },
-    plugins: ilcWebpackPluginsFactory({
-        publicPathDetection: { systemjsModuleName: '@portal/navbar' }
-    }),
+    plugins: ilcWebpackPluginsFactory().client,
     devtool: 'source-map',
     externals: [
         /^single-spa$/,

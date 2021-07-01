@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "ilc-adapter-vue": "^1.9.1",
-    "ilc-sdk": "^2.5.0",
+    "ilc-sdk": "^3.0.1",
     "rxjs": "6.3.3",
     "serve": "^11.3.2",
     "single-spa-vue": "^2.2.0",

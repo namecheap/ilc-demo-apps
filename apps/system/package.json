@@ -15,7 +15,7 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
-    "ilc-sdk": "^2.5.0",
+    "ilc-sdk": "^3.0.1",
     "lodash.template": "^4.5.0"
   },
   "devDependencies": {

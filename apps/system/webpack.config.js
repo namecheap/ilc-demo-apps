@@ -11,6 +11,8 @@ module.exports = {
         filename: 'index.js',
         libraryTarget: 'system',
         path: path.resolve(__dirname, 'build'),
+        jsonpFunction: 'wpSystemApp', // We need this to avoid conflicts of on-demand chunks in the global namespace
+        devtoolNamespace: 'SystemApp',
     },
     mode: 'production',
     module: {
@@ -39,9 +41,7 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: path.resolve(__dirname, 'index.js')}
         ]),
-        ...ilcWebpackPluginsFactory({
-            publicPathDetection: { systemjsModuleName: '@portal/system' }
-        }),
+        ...ilcWebpackPluginsFactory().client,
     ],
     devtool: 'source-map',
     externals: [],

@@ -8,7 +8,7 @@ const IlcAppSdk = require('ilc-sdk/app').default;
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 const {default: App} = require('./build/server');
-const PORT = 8235;
+const PORT = require('./PORT.json');
 
 const ilcSdk = new IlcSdk();
 const server = express();
@@ -19,7 +19,6 @@ if (process.env.NODE_ENV === 'development') {
 
     server.use(
         webpackMiddleware(webpack(require('./webpack.dev')), {
-            publicPath: '/',
             headers: {
                 "Access-Control-Allow-Origin": "*",
             },
@@ -49,8 +48,6 @@ server.get('*', (req, res) => {
     res.send(`<script type="application/messages">${JSON.stringify(links)}</script><div class="app-container">${html}</div>`);
 });
 
-const port = PORT || 3000;
-
-server.listen(port, () => {
-    console.log(`Navbar server started at port ${port}`);
+server.listen(PORT, () => {
+    console.log(`Navbar server started at port ${PORT}`);
 });
