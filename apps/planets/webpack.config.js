@@ -38,9 +38,7 @@ module.exports = {
     plugins: [
         new VueLoaderPlugin(),
         new CleanWebpackPlugin(['build/planets']),
-        ...ilcWebpackPluginsFactory({
-            publicPathDetection: { systemjsModuleName: '@portal/planets' }
-        }),
+        ...ilcWebpackPluginsFactory().client,
     ],
     devtool: 'source-map',
     externals: [

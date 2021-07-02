@@ -11,11 +11,13 @@ module.exports = {
         filename: 'fetchWithCache.js',
         libraryTarget: 'system',
         path: path.resolve(__dirname, 'build'),
+        jsonpFunction: 'wpFetchWithCache', // We need this to avoid conflicts of on-demand chunks in the global namespace
         devtoolNamespace: 'fetchWithCache',
     },
     mode: 'production',
     module: {
         rules: [
+            {parser: {system: false}},
             {
                 test: /\.js?$/,
                 exclude: [path.resolve(__dirname, 'node_modules')],
@@ -34,9 +36,7 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: path.resolve(__dirname, 'src/fetchWithCache.js')}
         ]),
-        ...ilcWebpackPluginsFactory({
-            publicPathDetection: { systemjsModuleName: '@portal/fetchWithCache' }
-        }),
+        ...ilcWebpackPluginsFactory().client,
     ],
     devtool: 'source-map',
     externals: [

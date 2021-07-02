@@ -6,7 +6,7 @@ const path = require('path');
 const {createBundleRenderer} = require('vue-server-renderer');
 const bundle = require('./dist/vue-ssr-server-bundle.json');
 const clientManifestSpa = require('./dist/vue-ssr-client-manifest-spa.json');
-const PORT = 8239;
+const PORT = require('./PORT.json');
 
 const server = express();
 server.use(require('cors')());
@@ -20,13 +20,13 @@ const renderer = createBundleRenderer(bundle, {
 });
 
 const IlcSdk = require('ilc-sdk').default;
-const ilcSdk = new IlcSdk({ publicPath: clientManifestSpa.publicPath });
+const ilcSdk = new IlcSdk();
 const appAssets = {
-    spaBundle: clientManifestSpa.all.find(v => v.endsWith('.js')),
-    cssBundle: clientManifestSpa.all.find(v => v.endsWith('.css'))
+    spaBundle: `/${clientManifestSpa.all.find(v => v.endsWith('.js'))}`,
+    cssBundle: `/${clientManifestSpa.all.find(v => v.endsWith('.css'))}`,
 };
 
-server.use('/dist', express.static(path.resolve(__dirname, './dist')));
+server.use(express.static('dist'));
 
 //TODO: this should be available only in dev mode
 server.get('/_spa/dev/assets-discovery', (req, res) => ilcSdk.assetsDiscoveryHandler(req, res, appAssets));
@@ -35,12 +35,10 @@ server.get('*', (req, res) => {
     res.setHeader("Content-Type", "text/html");
 
     const ilcData = ilcSdk.processRequest(req);
-    const props = ilcData.getCurrentPathProps();
 
     const context = {
         url: ilcData.getCurrentReqOriginalUri(), //TODO: correct base path handling
         appId: ilcData.appId,
-        publicPath: props.publicPath,
     };
 
     renderer.renderToString(context, (err, html) => {
@@ -64,5 +62,5 @@ server.get('*', (req, res) => {
 });
 
 server.listen(PORT, () => {
-    console.log("Server started")
+    console.log(`News server started at port ${PORT}`)
 });

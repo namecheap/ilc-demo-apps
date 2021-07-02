@@ -1,9 +1,12 @@
 const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
+const IlcSdk = require('ilc-sdk').default;
 
 const app = express();
 const port = 8240;
+
+const ilcSdk = new IlcSdk();
 
 const template = require('lodash.template');
 const pageTpl = template(fs.readFileSync(__dirname + '/tpl.ejs'));
@@ -15,9 +18,8 @@ if (process.env.NODE_ENV === 'development') {
 
     app.use(
         webpackMiddleware(webpack(require('./webpack.dev')), {
-            publicPath: '/',
             headers: {
-                "Access-Control-Allow-Origin": "*",
+                'Access-Control-Allow-Origin': '*',
             },
             logLevel: 'debug',
         })
@@ -29,9 +31,9 @@ if (process.env.NODE_ENV === 'development') {
 
 
 app.get('/fragment', (req, res) => {
-    const appProps = JSON.parse(Buffer.from(req.query.appProps, 'base64').toString('utf8'));
+    const reqData = ilcSdk.processRequest(req);
 
-    res.send(`<div data-ssr-content="true">${pageTpl({getCurrentPathProps: () => appProps})}</div>`);
+    res.send(`<div data-ssr-content="true">${pageTpl({getCurrentPathProps: () => reqData.getCurrentPathProps()})}</div>`);
 });
 
 app.listen(port, () => console.log(`System app listening on port ${port}!`));

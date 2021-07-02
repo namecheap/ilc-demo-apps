@@ -7,6 +7,8 @@ RUN apk --no-cache add --virtual builds-deps build-base python
 ADD ./ /codebase
 WORKDIR /codebase
 
+ENV PUBLIC_HOST=localhost
+
 RUN npm install --no-package-lock --no-progress --ignore-scripts
 RUN npm run install-all
 RUN npm run build:all

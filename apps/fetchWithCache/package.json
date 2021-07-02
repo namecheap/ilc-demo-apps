@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
-    "ilc-sdk": "^2.4.1",
+    "ilc-sdk": "^3.0.1",
     "serve": "^11.3.2"
   },
   "devDependencies": {

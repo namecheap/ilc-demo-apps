@@ -24,8 +24,8 @@ module.exports = {
             },
             {
                 test: /node_modules\/.+\.js?$/,
-                enforce: "pre",
-                use: ["source-map-loader"],
+                enforce: 'pre',
+                use: ['source-map-loader'],
             },
             {
                 test: /\.css$/,
@@ -84,9 +84,7 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(['build/people']),
-        ...ilcWebpackPluginsFactory({
-            publicPathDetection: { systemjsModuleName: '@portal/people' }
-        })
+        ...ilcWebpackPluginsFactory().client
     ],
     devtool: 'source-map',
     externals: [

@@ -1,13 +1,16 @@
 /* eslint-env node */
 const path = require('path');
+const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
 
 
 module.exports = {
     entry: path.resolve(__dirname, 'src/client-entry.js'),
     output: {
         filename: 'client-entry.js',
-        libraryTarget: 'amd',
+        libraryTarget: 'system',
         path: path.resolve(__dirname, 'build'),
+        jsonpFunction: 'wpWrapper', // We need this to avoid conflicts of on-demand chunks in the global namespace
+        devtoolNamespace: 'AppWrapper',
     },
     mode: 'production',
     module: {
@@ -26,7 +29,7 @@ module.exports = {
             'node_modules',
         ],
     },
-    plugins: [],
+    plugins: ilcWebpackPluginsFactory().client,
     devtool: 'source-map',
     externals: [],
 };

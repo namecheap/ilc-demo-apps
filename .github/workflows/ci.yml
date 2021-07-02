@@ -47,6 +47,7 @@ jobs:
         script_stop: true
         script: |
           curl -L https://raw.githubusercontent.com/namecheap/ilc/master/docker-compose.yml -o /home/ec2-user/docker-compose.yml
+          echo "PUBLIC_HOST=demo.microfrontends.online" > /home/ec2-user/demo-apps.env
           docker image prune --all -f
           docker-compose pull
           docker-compose up -d

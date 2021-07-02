@@ -1,0 +1,1 @@
+module.exports = port => 'http://${process.env.PUBLIC_HOST}:' + port +'/';

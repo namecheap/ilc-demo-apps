@@ -11,6 +11,7 @@ const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
 const wpModule = {
 	noParse: /es6-promise\.js$/,
 	rules: [
+		{parser: {system: false}},
 		{
 			test: /\.vue$/,
 			loader: 'vue-loader',
@@ -47,14 +48,21 @@ const commonPlugins = [
 	})
 ];
 
+const ilcWebpackPlugins = ilcWebpackPluginsFactory({
+	publicPathDetection: {
+		ssrPublicPath: require('../publicPathTpl')(require('./PORT.json'))
+	}
+});
+
 module.exports = [{ //client
 	mode: process.env.NODE_ENV,
 	devtool: 'source-map',
 	output: {
 		path: path.resolve(__dirname, './dist'),
-		publicPath: 'http://127.0.0.1:8239/dist/',
-		libraryTarget: 'amd',
-		filename: 'single_spa.js'
+		libraryTarget: 'system',
+		filename: 'single_spa.js',
+		jsonpFunction: 'wpNewsSSR', // We need this to avoid conflicts of on-demand chunks in the global namespace
+		devtoolNamespace: 'NewsSSR',
 	},
 	entry: {
 		app: './src/entry-client-spa.js'
@@ -71,11 +79,7 @@ module.exports = [{ //client
 		new VueSSRClientPlugin({
 			filename: 'vue-ssr-client-manifest-spa.json'
 		}),
-		...ilcWebpackPluginsFactory({
-			publicPathDetection: {
-				systemjsModuleName: '@portal/news'
-			}
-		}),
+		...ilcWebpackPlugins.client,
 	]
 },{ //server
 	mode: process.env.NODE_ENV,
@@ -84,7 +88,6 @@ module.exports = [{ //client
 	target: 'node',
 	output: {
 		path: path.resolve(__dirname, './dist'),
-		publicPath: 'http://127.0.0.1:8239/dist/',
 		filename: 'server-bundle.js',
 		libraryTarget: 'commonjs2'
 	},
@@ -100,6 +103,7 @@ module.exports = [{ //client
 	}),
 	plugins: [
 		...commonPlugins,
-		new VueSSRServerPlugin()
+		new VueSSRServerPlugin(),
+		...ilcWebpackPlugins.server
 	]
 }];
