@@ -29,7 +29,12 @@ const appAssets = {
 server.use(express.static('dist'));
 
 //TODO: this should be available only in dev mode
-server.get('/_spa/dev/assets-discovery', (req, res) => ilcSdk.assetsDiscoveryHandler(req, res, appAssets));
+server.get('/_spa/dev/assets-discovery', (req, res) =>
+    ilcSdk.assetsDiscoveryHandler(req, res, {
+        spaBundle: new URL(appAssets.spaBundle, `http://${process.env.PUBLIC_HOST}:${PORT}/`).href,
+        cssBundle: new URL(appAssets.cssBundle, `http://${process.env.PUBLIC_HOST}:${PORT}/`).href,
+    })
+);
 
 server.get('*', (req, res) => {
     res.setHeader("Content-Type", "text/html");
