@@ -2,6 +2,7 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
 module.exports = {
@@ -29,37 +30,11 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                exclude: [path.resolve(__dirname, 'node_modules'), /\.krem.css$/],
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true,
-                            localIdentName: '[path][name]__[local]',
-                        },
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            plugins() {
-                                return [
-                                    require('autoprefixer')
-                                ];
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                test: /\.css$/,
-                include: [path.resolve(__dirname, 'node_modules')],
                 exclude: [/\.krem.css$/],
-                use: ['style-loader', 'css-loader'],
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
             },
             {
                 test: /\.krem.css$/,
-                exclude: [path.resolve(__dirname, 'node_modules')],
                 use: [
                     {
                         loader: 'kremling-loader',
@@ -84,6 +59,9 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(['build/people']),
+        new MiniCssExtractPlugin({
+            filename: `people.css`
+        }),
         ...ilcWebpackPluginsFactory().client
     ],
     devtool: 'source-map',
@@ -97,4 +75,3 @@ module.exports = {
         /.*react-dom.*/,
     ],
 };
-

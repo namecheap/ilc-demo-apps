@@ -1,0 +1,5 @@
+h1:after {
+    content: '(Uses wrapper app cssBundle)';
+    font-size: 14px;
+    color: #ccc;
+}
