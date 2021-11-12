@@ -1,5 +1,16 @@
-h1:after {
-    content: '(Uses system app cssBundle)';
-    font-size: 14px;
-    color: #ccc;
+.rootSystem h1 {
+    color: #8db18d;
+}
+
+.system-link {
+    margin-bottom: 16px;
+    background-color: var(--orange);
+    color: var(--white);
+    border-style: none;
+    text-align: center;
+    cursor: pointer;
+    padding: 8px;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
 }

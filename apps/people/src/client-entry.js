@@ -1,4 +1,3 @@
-import './css/styles.css';
 import React from 'react';
 import singleSpaReact from 'ilc-adapter-react';
 

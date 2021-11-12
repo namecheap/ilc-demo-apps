@@ -1,3 +1,7 @@
+.peoplePage {
+  height: calc(100% - var(--navbar-height));
+}
+
 .peoplePageContents {
   display: flex;
 }
@@ -12,8 +16,3 @@
   border-left: 2px solid var(--white);
   padding: 24px;
 }
-
-.peoplePage {
-  height: calc(100% - var(--navbar-height));
-}
-

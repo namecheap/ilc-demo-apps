@@ -2,8 +2,7 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: path.resolve(__dirname, 'src/client-entry.js'),
@@ -17,7 +16,7 @@ module.exports = {
     mode: 'production',
     module: {
         rules: [
-            {parser: {system: false}},
+            { parser: { system: false } },
             {
                 test: /\.js?$/,
                 exclude: [path.resolve(__dirname, 'node_modules')],
@@ -30,24 +29,10 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                exclude: [/\.krem.css$/],
-                use: [MiniCssExtractPlugin.loader, 'css-loader'],
-            },
-            {
-                test: /\.krem.css$/,
-                use: [
-                    {
-                        loader: 'kremling-loader',
-                        options: {
-                            namespace: 'people',
-                            postcss: {
-                                plugins: {
-                                    'autoprefixer': {}
-                                }
-                            }
-                        },
-                    },
-                ]
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: 'css-loader?modules&importLoaders=1&localIdentName=[local]___[path][name]_[hash:base64:5]'
+                }),
             },
         ],
     },
@@ -59,8 +44,9 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(['build/people']),
-        new MiniCssExtractPlugin({
-            filename: `people.css`
+        new ExtractTextPlugin({
+            allChunks: true,
+            filename: 'people.css',
         }),
         ...ilcWebpackPluginsFactory().client
     ],

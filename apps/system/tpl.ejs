@@ -1,56 +1,43 @@
-<style>
-    .system-link {
-        margin-bottom: 16px;
-        background-color: var(--orange);
-        color: var(--white);
-        border-style: none;
-        text-align: center;
-        cursor: pointer;
-        padding: 8px;
-        text-decoration: none;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 13px;
-    }
-</style>
-
-<% if (getCurrentPathProps()._statusCode === '404') { %>
-    <h1><%= getCurrentPathProps().title || '404 not found' %></h1>
-<% } else if (getCurrentPathProps().page === 'home') { %>
-    <h1>Hi! Welcome to our Demo website.</h1>
-    <p>
-        Use links from the main menu to see examples of  apps written on different technologies running side by side on the
-        same page stitched together by Isomorphic Layout Composer.
-    </p>
-    <p>
-        This particular area was written on Vanilla JS using Lodash template while Navbar is written on React.
-    </p>
-<% } else if (getCurrentPathProps().page === 'wrapped') { %>
-    <h1>Welcome to target app that is hidden under App Wrapper.</h1>
-    <p>
-        You can see it now as Wrapper App immediately initiates target app rendering if it sees special query parameter.
-        <br>
-        This functionality works well with client side rendering and SSR (see what comes from server with & without query parameter).
-    </p>
-    <p>
-        App Wrappers are useful if you want to extract some bootstrap, loading or authorization functionality from different apps and
-        being able to control it from a single place.
-    </p>
-    <p>
-        App Wrappers can also pass additional props to target app. See props this app received now:
-        <pre><%- JSON.stringify(getCurrentPathProps(), null, 2) %></pre>
-    </p>
-<% } else if (getCurrentPathProps().page === 'hooks') { %>
-    <h1>Welcome to Transition Hooks entry page.</h1>
-    <p>
-        This page shows how transition hooks work on ILC.
-    </p>
-    <a class="system-link" href="/hooks/protected/">Go to Transition Hooks protected page</a>
-<% } else if (getCurrentPathProps().page === 'hooks-protected') { %>
-    <h1>Welcome to Transition Hooks protected page.</h1>
-    <p>
-        You can see this page only when all transition hooks allow you to see this page.
-    </p>
-    <a class="system-link" href="/hooks/">Go to Transition Hooks entry page</a>
-<% } else { %>
-    <h1>Unexpected error</h1>
-<% } %>
+<div class="rootSystem">
+    <% if (getCurrentPathProps()._statusCode === '404') { %>
+        <h1><%= getCurrentPathProps().title || '404 not found' %></h1>
+    <% } else if (getCurrentPathProps().page === 'home') { %>
+        <h1>Hi! Welcome to our Demo website.</h1>
+        <p>
+            Use links from the main menu to see examples of  apps written on different technologies running side by side on the
+            same page stitched together by Isomorphic Layout Composer.
+        </p>
+        <p>
+            This particular area was written on Vanilla JS using Lodash template while Navbar is written on React.
+        </p>
+    <% } else if (getCurrentPathProps().page === 'wrapped') { %>
+        <h1>Welcome to target app that is hidden under App Wrapper.</h1>
+        <p>
+            You can see it now as Wrapper App immediately initiates target app rendering if it sees special query parameter.
+            <br>
+            This functionality works well with client side rendering and SSR (see what comes from server with & without query parameter).
+        </p>
+        <p>
+            App Wrappers are useful if you want to extract some bootstrap, loading or authorization functionality from different apps and
+            being able to control it from a single place.
+        </p>
+        <p>
+            App Wrappers can also pass additional props to target app. See props this app received now:
+            <pre><%- JSON.stringify(getCurrentPathProps(), null, 2) %></pre>
+        </p>
+    <% } else if (getCurrentPathProps().page === 'hooks') { %>
+        <h1>Welcome to Transition Hooks entry page.</h1>
+        <p>
+            This page shows how transition hooks work on ILC.
+        </p>
+        <a class="system-link" href="/hooks/protected/">Go to Transition Hooks protected page</a>
+    <% } else if (getCurrentPathProps().page === 'hooks-protected') { %>
+        <h1>Welcome to Transition Hooks protected page.</h1>
+        <p>
+            You can see this page only when all transition hooks allow you to see this page.
+        </p>
+        <a class="system-link" href="/hooks/">Go to Transition Hooks entry page</a>
+    <% } else { %>
+        <h1>Unexpected error</h1>
+    <% } %>
+</div>
