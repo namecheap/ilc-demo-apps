@@ -2,7 +2,7 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
-
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: path.resolve(__dirname, 'src/client-entry.js'),
@@ -16,7 +16,7 @@ module.exports = {
     mode: 'production',
     module: {
         rules: [
-            {parser: {system: false}},
+            { parser: { system: false } },
             {
                 test: /\.js?$/,
                 exclude: [path.resolve(__dirname, 'node_modules')],
@@ -29,50 +29,10 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                exclude: [path.resolve(__dirname, 'node_modules'), /\.krem.css$/],
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true,
-                            localIdentName: '[path][name]__[local]',
-                        },
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            plugins() {
-                                return [
-                                    require('autoprefixer')
-                                ];
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                test: /\.css$/,
-                include: [path.resolve(__dirname, 'node_modules')],
-                exclude: [/\.krem.css$/],
-                use: ['style-loader', 'css-loader'],
-            },
-            {
-                test: /\.krem.css$/,
-                exclude: [path.resolve(__dirname, 'node_modules')],
-                use: [
-                    {
-                        loader: 'kremling-loader',
-                        options: {
-                            namespace: 'people',
-                            postcss: {
-                                plugins: {
-                                    'autoprefixer': {}
-                                }
-                            }
-                        },
-                    },
-                ]
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: 'css-loader?modules&importLoaders=1&localIdentName=[local]___[path][name]_[hash:base64:5]'
+                }),
             },
         ],
     },
@@ -84,6 +44,10 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(['build/people']),
+        new ExtractTextPlugin({
+            allChunks: true,
+            filename: 'people.css',
+        }),
         ...ilcWebpackPluginsFactory().client
     ],
     devtool: 'source-map',
@@ -97,4 +61,3 @@ module.exports = {
         /.*react-dom.*/,
     ],
 };
-

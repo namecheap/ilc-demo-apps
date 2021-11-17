@@ -1,41 +1,38 @@
 import React, {Fragment} from 'react'
-import { Scoped } from 'kremling'
-import styles from './people-list.krem.css'
+import styles from './people-list.css'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
+import CSSModules from 'react-css-modules';
 
-@withRouter
-export default class PeopleList extends React.Component {
+class PeopleList extends React.Component {
 
   render () {
     const { people, loadingPeople } = this.props
     return (
-      <Scoped postcss={styles}>
-        <div className='peopleList'>
-          <Fragment>
-            {
-              people.map((person) => {
-                return (
-                  <Link
-                    key={person.name}
-                    className='person'
-                    to={`${this.props.match.path}?selected=${window.encodeURIComponent(person.id)}`}
-                  >
-                    {person.name}
-                  </Link>
-                )
-              })
-            }
-            {
-              loadingPeople && (
-                <div>
-                  Loading ...
-                </div>
+      <div className='peopleList'>
+        <Fragment>
+          {
+            people.map((person) => {
+              return (
+                <Link
+                  key={person.name}
+                  styleName="person"
+                  to={`${this.props.match.path}?selected=${window.encodeURIComponent(person.id)}`}
+                >
+                  {person.name}
+                </Link>
               )
-            }
-          </Fragment>
-        </div>
-      </Scoped>
+            })
+          }
+          {
+            loadingPeople && (
+              <div>
+                Loading ...
+              </div>
+            )
+          }
+        </Fragment>
+      </div>
     )
   }
 
@@ -45,3 +42,5 @@ export default class PeopleList extends React.Component {
     }
   }
 }
+
+export default withRouter(CSSModules(PeopleList, styles));

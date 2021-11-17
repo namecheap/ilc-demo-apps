@@ -16,8 +16,12 @@ export default function RootComponent({renderApp = () => {}, serverLocation}) {
         return null;
     }
 
-    return <div>
-        <h1>Hello from wrapper!</h1>
-        <button onClick={onClick}>Mount actual app</button>
-    </div>;
+    return (
+        <div>
+            <div className="rootWrapper">
+                <h1>Hello from wrapper!</h1>
+                <button onClick={onClick}>Mount actual app</button>
+            </div>
+        </div>
+    );
 };

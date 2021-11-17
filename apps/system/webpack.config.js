@@ -3,6 +3,7 @@ const path = require('path');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
 module.exports = {
@@ -28,6 +29,10 @@ module.exports = {
                     'raw-loader',
                 ],
             },
+            {
+                test: /\.css$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
+            },
         ],
     },
     resolve: {
@@ -41,9 +46,11 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: path.resolve(__dirname, 'index.js')}
         ]),
+        new MiniCssExtractPlugin({
+            filename: `system.css`
+        }),
         ...ilcWebpackPluginsFactory().client,
     ],
     devtool: 'source-map',
     externals: [],
 };
-

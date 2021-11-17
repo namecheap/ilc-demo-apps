@@ -1,14 +1,13 @@
 import React, {Fragment} from 'react'
 import AsyncDecorator from 'async-decorator/rx6'
-import { Scoped } from 'kremling'
 import { from, operators } from 'rxjs'
 const { tap, mergeMap, switchMap } = operators
-import styles from './films.krem.css'
+import styles from './films.css'
 import { getFilm } from '../utils/api.js'
 import Film from './film.component.js'
+import CSSModules from 'react-css-modules';
 
-@AsyncDecorator
-export default class Films extends React.Component {
+class Films extends React.Component {
 
   state = {
     films: [],
@@ -22,58 +21,58 @@ export default class Films extends React.Component {
           return props.films
         }
       )
-      .pipe(
-        switchMap(films => from(films)),
-        tap(() => this.setState({films: []})),
-        mergeMap(film => {
-          return getFilm(film.match(/([0-9]+)\/$/)[1])
-        }),
-      ).subscribe(
-        (film) => {
-          this.setState(prev => {
-            const films = [...prev.films, film]
-            return {films}
-          })
-        },
-        (err) => this.setState({error: true})
-      )
+        .pipe(
+          switchMap(films => from(films)),
+          tap(() => this.setState({ films: [] })),
+          mergeMap(film => {
+            return getFilm(film.match(/([0-9]+)\/$/)[1])
+          }),
+        ).subscribe(
+          (film) => {
+            this.setState(prev => {
+              const films = [...prev.films, film]
+              return { films }
+            })
+          },
+          (err) => this.setState({ error: true })
+        )
     )
   }
 
-  render () {
+  render() {
     const { films, error } = this.state
     return (
-      <Scoped postcss={styles}>
-        <div className='films'>
-          {
-            error && (
-              <div>
-                Error
-              </div>
-            )
-          }
-          {
-            films.length !== this.props.films.length && !error && (
-              <div>
-                ... Loading
-              </div>
-            )
-          }
-          {
-            films.length === this.props.films.length && !error && (
-              <Fragment>
-                {
-                  films.map((film) => {
-                    return (
-                      <Film key={film.episode_id} film={film}/>
-                    )
-                  })
-                }
-              </Fragment>
-            )
-          }
-        </div>
-      </Scoped>
+      <div styleName='films'>
+        {
+          error && (
+            <div>
+              Error
+            </div>
+          )
+        }
+        {
+          films.length !== this.props.films.length && !error && (
+            <div>
+              ... Loading
+            </div>
+          )
+        }
+        {
+          films.length === this.props.films.length && !error && (
+            <Fragment>
+              {
+                films.map((film) => {
+                  return (
+                    <Film key={film.episode_id} film={film} />
+                  )
+                })
+              }
+            </Fragment>
+          )
+        }
+      </div>
     )
   }
 }
+
+export default AsyncDecorator(CSSModules(Films, styles));

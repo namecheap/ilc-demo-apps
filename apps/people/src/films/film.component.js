@@ -1,7 +1,9 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import { imageMap } from './film.helpers.js'
+import styles from './films.css'
+import CSSModules from 'react-css-modules';
 
-export default class Film extends React.Component {
+class Film extends React.Component {
 
   state = {
     showOverlay: false
@@ -10,15 +12,15 @@ export default class Film extends React.Component {
   render () {
     const { film } = this.props
     return (
-      <div className='film'
+      <div styleName="film"
         onMouseEnter={this.mouseOn}
         onMouseLeave={this.mouseOut}
         tabIndex={0}
       >
-        <img className='filmPoster' src={imageMap[film.episode_id]} alt={film.title} />
+        <img styleName="filmPoster" src={imageMap[film.episode_id]} alt={film.title} />
         {
           this.state.showOverlay && (
-            <div className='filmOverlay'>
+            <div styleName="filmOverlay">
               <div>
                 <div>
                   <div>
@@ -60,3 +62,5 @@ export default class Film extends React.Component {
     this.setState({showOverlay: false})
   }
 }
+
+export default CSSModules(Film, styles);
