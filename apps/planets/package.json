@@ -12,13 +12,13 @@
   },
   "license": "ISC",
   "dependencies": {
-    "ilc-adapter-vue": "^1.9.1",
+    "ilc-adapter-vue": "^1.9.2",
     "ilc-sdk": "^3.0.1",
     "rxjs": "6.3.3",
     "serve": "^11.3.2",
     "single-spa-vue": "^2.2.0",
-    "vue": "2.5.17",
-    "vue-router": "3.0.1"
+    "vue": "2.6.12",
+    "vue-router": "3.3.0"
   },
   "devDependencies": {
     "@babel/core": "7.1.2",
@@ -28,10 +28,10 @@
     "clean-webpack-plugin": "0.1.19",
     "css-loader": "1.0.0",
     "style-loader": "0.23.0",
-    "vue-loader": "15.4.2",
+    "vue-loader": "15.9.2",
     "vue-style-loader": "4.1.2",
-    "vue-template-compiler": "2.5.17",
-    "webpack": "^4.30.0",
+    "vue-template-compiler": "2.6.12",
+    "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
   }
