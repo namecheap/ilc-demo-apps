@@ -1,4 +1,4 @@
-FROM node:12-alpine
+FROM node:16-alpine
 
 EXPOSE 8240 8239 8238 8237 8236 8235 8234
 
