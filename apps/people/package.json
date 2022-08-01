@@ -16,6 +16,7 @@
     "ilc-adapter-react": "^1.0.0",
     "ilc-sdk": "^3.0.1",
     "query-string": "6.1.0",
+    "react-dom": "16.14.0",
     "react-router": "4.3.1",
     "react-router-dom": "4.3.1",
     "serve": "^11.3.2"
