@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Docker ilc auth
-      run: echo "${{ secrets.DOCKER_HUB_TOKEN_NC }}" | docker login --username namecheaprnd --password-stdin
+      run: echo "${{ secrets.DOCKER_HUB_TOKEN_SHARED_DEVOPS }}" | docker login --username brothers --password-stdin
 
     - name: Build the Docker image
       run: |
