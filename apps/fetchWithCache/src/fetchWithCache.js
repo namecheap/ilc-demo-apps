@@ -4,7 +4,7 @@ import axios from 'axios'
 import addId from './addId.js'
 
 const axiosInstance = axios.create({
-  baseURL: 'https://swapi.dev/api/',
+  baseURL: 'https://swapi-e2e.service.spaceship.com/api/v1/sample-ilc-demo-app/',
   timeout: 20000,
 })
 
