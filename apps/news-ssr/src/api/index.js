@@ -1,6 +1,7 @@
 const {API} = require('axios-client');
 
 const client = API();
+const baseUrl = 'https://swapi-e2e.service.spaceship.com/api/v1/sample-ilc-demo-app'
 
 if (client.server) {
     cacheSources();
@@ -43,9 +44,9 @@ function fetch(url, params = null) {
 }
 
 export function fetchSources() {
-    return fetch('https://news-api-cache.s3.us-west-1.amazonaws.com/v1/sources');
+    return fetch(`${baseUrl}/sources`);
 }
 
 export function fetchHeadlines(source) {
-    return fetch(`https://news-api-cache.s3.us-west-1.amazonaws.com/v1/articles/${source}`);
+    return fetch(`${baseUrl}/articles/${source}`);
 }
