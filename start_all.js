@@ -15,13 +15,14 @@ fs.readdirSync('./apps').forEach(fileName => {
         return;
     }
 
-    commands.push({ command: `cd ./apps/${fileName}/ && ${runCmd}`, name: fileName });
+    commands.push({ cwd: `apps/${fileName}`, command: runCmd, name: fileName });
 });
 
 concurrently(commands, {
     prefix: 'name',
     killOthers: ['failure', 'success'],
-}).then(() => {
+    prefixColors: ['auto']
+}).result.then(() => {
     console.log('concurrently was finished successfully');
     process.exit(0);
 }, (err) => {

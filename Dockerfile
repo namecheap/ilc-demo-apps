@@ -8,6 +8,8 @@ ADD ./ /codebase
 WORKDIR /codebase
 
 ENV PUBLIC_HOST=localhost
+# Flag for serve command
+ENV NO_UPDATE_CHECK=1
 
 RUN npm install --no-package-lock --no-progress --ignore-scripts
 RUN npm run install-all
