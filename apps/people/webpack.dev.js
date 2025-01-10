@@ -1,15 +1,13 @@
 /* eslint-env node */
 const config = require('./webpack.config.js');
-const webpack = require('webpack');
 
-config.plugins.push(new webpack.NamedModulesPlugin());
-config.plugins.push(new webpack.HotModuleReplacementPlugin());
 config.devServer = {
   headers: {
-    "Access-Control-Allow-Origin": "*",
+    'Access-Control-Allow-Origin': '*',
   },
-  disableHostCheck: true,
+  allowedHosts: 'all',
 };
+config.optimization.moduleIds = 'named';
 
 config.mode = 'development';
 
