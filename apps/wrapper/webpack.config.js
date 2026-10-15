@@ -10,13 +10,15 @@ module.exports = {
         filename: 'client-entry.js',
         libraryTarget: 'system',
         path: path.resolve(__dirname, 'build'),
-        jsonpFunction: 'wpWrapper', // We need this to avoid conflicts of on-demand chunks in the global namespace
+        chunkLoadingGlobal: 'wpWrapper', // We need this to avoid conflicts of on-demand chunks in the global namespace
         devtoolNamespace: 'AppWrapper',
+        clean: true,
     },
     mode: 'production',
     module: {
+        // System.register output: leave System.* calls in the source alone (JavaScript modules only).
+        parser: { javascript: { system: false } },
         rules: [
-            {parser: {system: false}},
             {
                 test: /\.js?$/,
                 exclude: [path.resolve(__dirname, 'node_modules')],

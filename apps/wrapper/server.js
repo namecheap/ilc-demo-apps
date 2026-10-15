@@ -21,7 +21,6 @@ if (process.env.NODE_ENV === 'development') {
             headers: {
                 "Access-Control-Allow-Origin": "*",
             },
-            logLevel: 'debug',
         })
     );
 } else {
@@ -31,17 +30,17 @@ if (process.env.NODE_ENV === 'development') {
 
 server.get('*', (req, res) => {
     res.setHeader('Content-Type', 'text/html');
-    const ilcReqData = ilcSdk.processRequest(req);
+    const { requestData, processResponse } = ilcSdk.processRequest(req);
     let propsOverride = null;
     const renderApp = props => propsOverride = props;
 
-    const serverLocation = new URL(`https://${ilcReqData.getCurrentReqHost()}${ilcReqData.getCurrentReqOriginalUri()}`);
+    const serverLocation = new URL(`https://${requestData.getCurrentReqHost()}${requestData.getCurrentReqOriginalUri()}`);
     const html = ReactDOMServer.renderToString(App({ serverLocation, renderApp }));
 
-    ilcSdk.processResponse(ilcReqData, res, {});
+    processResponse(res, {});
 
     if (propsOverride !== null) {
-        return ilcSdk.forwardRequest(ilcReqData, res, { propsOverride });
+        return ilcSdk.forwardRequest(requestData, res, { propsOverride });
     }
 
     res.send(`<div class="app-container">${html}</div>`);
