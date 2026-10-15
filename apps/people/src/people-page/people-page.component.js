@@ -1,6 +1,5 @@
 import React from 'react';
 import AsyncDecorator from 'async-decorator/rx6';
-import queryString from 'query-string';
 import { find } from 'lodash';
 import CSSModules, {  } from 'react-css-modules';
 
@@ -75,7 +74,8 @@ class PeoplePage extends React.Component {
 
   selectPersonFromQueryParams = () => {
     const search = this.props.location.search
-    const parsed = queryString.parse(search)
+    const params = new URLSearchParams(search)
+    const parsed = { selected: params.has('selected') ? params.get('selected') : undefined }
     if (
       (this.state.selectedPerson === undefined && parsed.selected !== undefined) ||
       (this.state.selectedPerson && parsed && parsed.selected !== this.state.selectedPerson.id)
