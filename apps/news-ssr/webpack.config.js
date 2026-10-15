@@ -1,17 +1,17 @@
 const path = require('path');
-const webpack = require('webpack');
 
 const nodeExternals = require('webpack-node-externals');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
 
 const wpModule = {
 	noParse: /es6-promise\.js$/,
+	// System.register output: leave System.* calls in the source alone (JavaScript modules only).
+	parser: { javascript: { system: false } },
 	rules: [
-		{parser: {system: false}},
 		{
 			test: /\.vue$/,
 			loader: 'vue-loader',
@@ -23,10 +23,10 @@ const wpModule = {
 		},
 		{
 			test: /\.(png|jpg|gif|svg)$/,
-			loader: 'file-loader',
-			options: {
-				name: '[name].[ext]?[hash]',
-			}
+			type: 'asset/resource',
+			generator: {
+				filename: '[name][ext]?[hash]',
+			},
 		},
 		{
 			test: /\.css$/,
@@ -34,7 +34,11 @@ const wpModule = {
 				process.env.NODE_ENV !== 'production'
 					? 'vue-style-loader'
 					: MiniCssExtractPlugin.loader,
-				'css-loader'
+				{
+					loader: 'css-loader',
+					// vue-style-loader expects css-loader's CommonJS output
+					options: { esModule: process.env.NODE_ENV === 'production' },
+				},
 			]
 		}
 	]
@@ -42,11 +46,14 @@ const wpModule = {
 
 const commonPlugins = [
 	new VueLoaderPlugin(),
-	new webpack.optimize.ModuleConcatenationPlugin(),
 	new MiniCssExtractPlugin({
-		filename: `common.[chunkhash].css`
+		filename: `common.[contenthash].css`
 	})
 ];
+
+// vue-loader 15 imports every <style> block as `import styleN from ...` but only reads styleN for CSS modules;
+// with webpack 5 that unused default import of scoped/plain styles is reported. The CSS is still extracted.
+const ignoreWarnings = [/export 'default' \(imported as 'style\d+'\) was not found/];
 
 const ilcWebpackPlugins = ilcWebpackPluginsFactory({
 	publicPathDetection: {
@@ -61,7 +68,7 @@ module.exports = [{ //client
 		path: path.resolve(__dirname, './dist'),
 		libraryTarget: 'system',
 		filename: 'single_spa.js',
-		jsonpFunction: 'wpNewsSSR', // We need this to avoid conflicts of on-demand chunks in the global namespace
+		chunkLoadingGlobal: 'wpNewsSSR', // We need this to avoid conflicts of on-demand chunks in the global namespace
 		devtoolNamespace: 'NewsSSR',
 	},
 	entry: {
@@ -74,6 +81,7 @@ module.exports = [{ //client
 		}
 	},
 	module: wpModule,
+	ignoreWarnings,
 	plugins: [
 		...commonPlugins,
 		new VueSSRClientPlugin({
@@ -98,8 +106,9 @@ module.exports = [{ //client
 		}
 	},
 	module: wpModule,
+	ignoreWarnings,
 	externals: nodeExternals({
-		whitelist: /\.css$/
+		allowlist: /\.css$/
 	}),
 	plugins: [
 		...commonPlugins,
