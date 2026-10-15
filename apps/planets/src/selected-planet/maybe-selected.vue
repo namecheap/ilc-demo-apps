@@ -28,7 +28,7 @@
 
 <script>
 import SelectedPlanet from './selected-planet.vue';
-import Parcel from 'single-spa-vue/dist/esm/parcel';
+import Parcel from 'single-spa-vue/parcel';
 
 export default {
     components: {
