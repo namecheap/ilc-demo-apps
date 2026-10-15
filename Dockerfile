@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:22-alpine
 
 EXPOSE 8240 8239 8238 8237 8236 8235 8234
 
@@ -11,7 +11,7 @@ ENV PUBLIC_HOST=localhost
 # Flag for serve command
 ENV NO_UPDATE_CHECK=1
 
-RUN npm install --no-package-lock --no-progress --ignore-scripts
+RUN npm ci --no-progress --ignore-scripts
 RUN npm run install-all
 RUN npm run build:all
 

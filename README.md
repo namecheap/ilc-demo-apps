@@ -35,6 +35,8 @@ http://demo.microfrontends.online/
 
 ## Development process
 
+Requires Node.js 22 or newer.
+
 1. Clone the repo
 1. Run `npm install`
 1. Run `npm run build:all`
