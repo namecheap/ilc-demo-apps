@@ -1,10 +1,7 @@
 /* eslint-env node */
 const path = require('path');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ilcWebpackPluginsFactory = require('ilc-sdk').WebpackPluginsFactory;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
 
 module.exports = {
     entry: path.resolve(__dirname, 'index.js'),
@@ -12,22 +9,18 @@ module.exports = {
         filename: 'index.js',
         libraryTarget: 'system',
         path: path.resolve(__dirname, 'build'),
-        jsonpFunction: 'wpSystemApp', // We need this to avoid conflicts of on-demand chunks in the global namespace
+        chunkLoadingGlobal: 'wpSystemApp', // We need this to avoid conflicts of on-demand chunks in the global namespace
         devtoolNamespace: 'SystemApp',
+        clean: true,
     },
     mode: 'production',
     module: {
+        // System.register output: leave System.* calls in the source alone (JavaScript modules only).
+        parser: { javascript: { system: false } },
         rules: [
-            {parser: {system: false}},
             {
-                test: /\.js?$/,
-                exclude: [path.resolve(__dirname, 'node_modules')],
-                loader: 'babel-loader',
-            }, {
                 test: /\.ejs$/,
-                loaders: [
-                    'raw-loader',
-                ],
+                type: 'asset/source',
             },
             {
                 test: /\.css$/,
@@ -36,18 +29,11 @@ module.exports = {
         ],
     },
     resolve: {
-        modules: [
-            __dirname,
-            'node_modules',
-        ],
+        modules: [__dirname, 'node_modules'],
     },
     plugins: [
-        new CleanWebpackPlugin(),
-        new CopyWebpackPlugin([
-            {from: path.resolve(__dirname, 'index.js')}
-        ]),
         new MiniCssExtractPlugin({
-            filename: `system.css`
+            filename: `system.css`,
         }),
         ...ilcWebpackPluginsFactory().client,
     ],

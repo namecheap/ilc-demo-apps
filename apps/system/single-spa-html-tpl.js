@@ -2,7 +2,7 @@
  * WARNING! Code was taken from https://github.com/CanopyTax/single-spa-html/blob/v1.0.0/src/single-spa-html.js
  */
 
-import template from 'lodash.template';
+import template from 'lodash/template';
 
 const defaultOpts = {
     template: "",
