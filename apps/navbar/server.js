@@ -4,7 +4,6 @@ const express = require('express');
 const cors = require('cors');
 
 const IlcSdk = require('ilc-sdk').default;
-const IlcAppSdk = require('ilc-sdk/app').default;
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 const {default: App} = require('./build/server');
@@ -22,7 +21,6 @@ if (process.env.NODE_ENV === 'development') {
             headers: {
                 "Access-Control-Allow-Origin": "*",
             },
-            logLevel: 'debug',
         })
     );
 } else {
@@ -32,8 +30,7 @@ if (process.env.NODE_ENV === 'development') {
 
 server.get('*', (req, res) => {
     res.setHeader('Content-Type', 'text/html');
-    const ilcReqData = ilcSdk.processRequest(req);
-    const appSdk = new IlcAppSdk(ilcReqData);
+    const { requestData, appSdk } = ilcSdk.processRequest(req);
 
 
     let links;
@@ -43,7 +40,7 @@ server.get('*', (req, res) => {
         links = require(`./src/links/${appSdk.intl.getDefault().locale}.json`);
     }
 
-    const html = ReactDOMServer.renderToString(App(appSdk, ilcReqData.getCurrentReqOriginalUri(), links));
+    const html = ReactDOMServer.renderToString(App(appSdk, requestData.getCurrentReqOriginalUri(), links));
 
     res.send(`<script type="application/messages">${JSON.stringify(links)}</script><div class="app-container">${html}</div>`);
 });
