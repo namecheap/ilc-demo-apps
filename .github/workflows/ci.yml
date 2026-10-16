@@ -41,8 +41,16 @@ jobs:
             docker push namecheap/ilc-demo-apps:$i
         done
 
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    # optional for now: a failed deploy of the demo site does not fail the pipeline (the image is already pushed)
+    continue-on-error: true
+
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Deploy demo site
-      if: github.ref == 'refs/heads/master'
       uses: appleboy/ssh-action@v0.0.7
       with:
         host: ${{ secrets.DEMO_INSTANCE_HOST }}
