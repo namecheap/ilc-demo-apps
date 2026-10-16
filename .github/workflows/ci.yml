@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v6
 
     - name: Docker ilc auth
       run: echo "${{ secrets.DOCKER_HUB_TOKEN_ARCH_ACCOUNT }}" | docker login --username techarchitectsteam --password-stdin
@@ -29,7 +29,7 @@ jobs:
         LATEST=$([ "$BRANCH" == "master" ] && echo "latest,${GITHUB_SHA:0:7}," || echo "")
         DOCKER_TAGS="$LATEST${BRANCH//\//_}"
         echo "Tags that will be used: $DOCKER_TAGS"
-        echo ::set-output name=docker_tags::$DOCKER_TAGS
+        echo "docker_tags=$DOCKER_TAGS" >> "$GITHUB_OUTPUT"
 
     - name: Push image
       run: |
@@ -41,8 +41,16 @@ jobs:
             docker push namecheap/ilc-demo-apps:$i
         done
 
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    # optional for now: a failed deploy of the demo site does not fail the pipeline (the image is already pushed)
+    continue-on-error: true
+
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Deploy demo site
-      if: github.ref == 'refs/heads/master'
       uses: appleboy/ssh-action@v0.0.7
       with:
         host: ${{ secrets.DEMO_INSTANCE_HOST }}
