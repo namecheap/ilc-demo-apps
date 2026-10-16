@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v6
 
     - name: Docker ilc auth
       run: echo "${{ secrets.DOCKER_HUB_TOKEN_ARCH_ACCOUNT }}" | docker login --username techarchitectsteam --password-stdin
@@ -29,7 +29,7 @@ jobs:
         LATEST=$([ "$BRANCH" == "master" ] && echo "latest,${GITHUB_SHA:0:7}," || echo "")
         DOCKER_TAGS="$LATEST${BRANCH//\//_}"
         echo "Tags that will be used: $DOCKER_TAGS"
-        echo ::set-output name=docker_tags::$DOCKER_TAGS
+        echo "docker_tags=$DOCKER_TAGS" >> "$GITHUB_OUTPUT"
 
     - name: Push image
       run: |
