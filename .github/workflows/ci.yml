@@ -17,6 +17,11 @@ jobs:
       run: |
         docker build --tag apps:tmp --build-arg VCS_REF=${GITHUB_SHA:0:7} .
 
+    - name: Test
+      # inside the image just built: its Node version, app dependencies and server bundles
+      run: |
+        docker run --rm -e CI=true apps:tmp sh -c "cd tests && npm ci --no-audit --no-fund && npm test"
+
     - name: Calc tags
       id: tags
       run: |
