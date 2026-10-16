@@ -1,5 +1,6 @@
-// Fake SWAPI responses for the people app. Tests mock `@portal/fetchWithCache` with `swapi`, which answers
-// on a later macrotask (like a real request would) so that loading states can be observed.
+// Fake SWAPI responses for the people app. Tests mock `@portal/fetchWithCache` with `swapi`, which answers only
+// when the test calls `flush()`, so loading states can be observed however slow the machine is (a timer could
+// fire while React's async act() yields to the event loop).
 import { defer, throwError } from 'rxjs';
 import { act } from 'react-dom/test-utils';
 
@@ -61,17 +62,25 @@ export const responses = {
     'films/2/': empire,
 };
 
+const pendingResponses = [];
+
+afterEach(() => {
+    pendingResponses.length = 0;
+});
+
 export function swapi(path) {
     if (!(path in responses)) {
         return throwError(new Error(`Request failed: ${path}`));
     }
-    return defer(() => new Promise((resolve) => setTimeout(() => resolve(responses[path]), 0)));
+    return defer(() => new Promise((resolve) => pendingResponses.push(() => resolve(responses[path]))));
 }
 
-// Lets every pending timer, request and re-render settle (async-decorator also emits props on a timer)
+// Answers the pending requests and lets every timer, follow-up request and re-render settle (async-decorator
+// also emits props on a timer)
 export async function flush() {
     for (let i = 0; i < 10; i++) {
         await act(async () => {
+            pendingResponses.splice(0).forEach((respond) => respond());
             await new Promise((resolve) => setTimeout(resolve, 0));
         });
     }
