@@ -1,3 +1,5 @@
 node_modules
 .git
 apps/*/node_modules
+tests/node_modules
+tests/coverage

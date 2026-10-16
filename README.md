@@ -40,3 +40,11 @@ http://demo.microfrontends.online/
 1. Run `npm run build:all`
 1. Run `npm run dev`
 1. Open `127.0.0.1` at respective ports to see apps running.
+
+## Tests
+
+The apps' unit and integration tests live in [tests](./tests). CI runs them inside the freshly built Docker image and fails
+if coverage of the apps' sources drops below 95%. To run them locally:
+
+1. Run `npm install` and `npm run build:all` (the server tests render the SSR bundles)
+1. Run `cd tests && npm ci && npm test`

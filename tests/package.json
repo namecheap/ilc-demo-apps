@@ -1,0 +1,23 @@
+{
+  "name": "ilc-demo-apps-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Unit and integration tests for the demo apps. They resolve each app's own dependencies, so they run against whatever versions the apps are built with.",
+  "scripts": {
+    "test": "cd .. && jest --config tests/jest.config.js --coverage"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@babel/core": "^7.29.7",
+    "@babel/plugin-proposal-decorators": "^7.29.7",
+    "@babel/preset-env": "^7.29.7",
+    "@babel/preset-react": "^7.29.7",
+    "babel-jest": "^29.7.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "nock": "^13.5.6",
+    "rxjs": "6.4.0",
+    "supertest": "^7.1.4"
+  }
+}
