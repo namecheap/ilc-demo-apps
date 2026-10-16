@@ -9,24 +9,23 @@ module.exports = {
         filename: 'navbar.js',
         libraryTarget: 'system',
         path: path.resolve(__dirname, 'build'),
-        jsonpFunction: 'wpNavbarApp', // We need this to avoid conflicts of on-demand chunks in the global namespace
+        chunkLoadingGlobal: 'wpNavbarApp', // We need this to avoid conflicts of on-demand chunks in the global namespace
         devtoolNamespace: '@portal/navbar',
     },
     mode: 'production',
     module: {
+        // System.register output: leave System.* calls in the source alone (JavaScript modules only;
+        // webpack 5 validates parser options per module type, so a catch-all rule would break JSON imports).
+        parser: { javascript: { system: false } },
         rules: [
-            {parser: {system: false}},
             {
                 test: /\.js?$/,
                 exclude: [path.resolve(__dirname, 'node_modules')],
                 loader: 'babel-loader',
-            },{
+            },
+            {
                 test: /\.(png|jpe?g|gif)$/i,
-                use: [
-                    {
-                        loader: 'file-loader',
-                    },
-                ],
+                type: 'asset/resource',
             },
         ],
     },

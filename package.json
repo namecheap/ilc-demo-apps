@@ -13,6 +13,14 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^9.2.1"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "overrides": {
+    "concurrently": {
+      "shell-quote": "^1.11.0"
+    }
   }
 }

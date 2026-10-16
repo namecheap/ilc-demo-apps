@@ -6,33 +6,40 @@
   "main": "index.js",
   "scripts": {
     "start": "serve -p tcp:0.0.0.0:8237 --no-clipboard --cors build",
-    "dev": "webpack-dev-server --config ./webpack.dev.js --port 8237",
-    "build": "webpack --config webpack.config.js --progress --hide-modules",
+    "dev": "webpack serve --config ./webpack.dev.js --port 8237",
+    "build": "webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "ISC",
   "dependencies": {
     "ilc-adapter-vue": "^1.9.2",
-    "ilc-sdk": "^3.0.1",
-    "rxjs": "6.3.3",
-    "serve": "^11.3.2",
-    "single-spa-vue": "^2.2.0",
-    "vue": "2.6.12",
-    "vue-router": "3.3.0"
+    "ilc-sdk": "^7.0.0",
+    "lodash": "^4.18.1",
+    "rxjs": "^6.6.7",
+    "serve": "^14.2.5",
+    "single-spa-vue": "^2.5.1",
+    "vue": "^2.7.16",
+    "vue-router": "^3.6.5"
   },
   "devDependencies": {
-    "@babel/core": "7.1.2",
-    "@babel/preset-env": "7.1.0",
-    "babel-core": "6.26.3",
-    "babel-loader": "8.0.4",
-    "clean-webpack-plugin": "0.1.19",
-    "css-loader": "1.0.0",
-    "style-loader": "0.23.0",
-    "vue-loader": "15.9.2",
-    "vue-style-loader": "4.1.2",
-    "vue-template-compiler": "2.6.12",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "@babel/core": "^7.29.7",
+    "@babel/preset-env": "^7.28.0",
+    "babel-loader": "^10.0.0",
+    "css-loader": "^7.1.2",
+    "style-loader": "^4.0.0",
+    "vue-loader": "^15.11.1",
+    "webpack": "^5.101.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.6"
+  },
+  "overrides": {
+    "sockjs": {
+      "uuid": "^11.1.1"
+    },
+    "@vue/component-compiler-utils": {
+      "postcss": "^8.5.23",
+      "postcss-selector-parser": "^7.1.6"
+    },
+    "compression": "^1.8.2"
   }
 }

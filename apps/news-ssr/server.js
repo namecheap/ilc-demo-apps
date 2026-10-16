@@ -39,11 +39,11 @@ server.get('/_spa/dev/assets-discovery', (req, res) =>
 server.get('*', (req, res) => {
     res.setHeader("Content-Type", "text/html");
 
-    const ilcData = ilcSdk.processRequest(req);
+    const { requestData, processResponse } = ilcSdk.processRequest(req);
 
     const context = {
-        url: ilcData.getCurrentReqOriginalUri(), //TODO: correct base path handling
-        appId: ilcData.appId,
+        url: requestData.getCurrentReqOriginalUri(), //TODO: correct base path handling
+        appId: requestData.appId,
     };
 
     renderer.renderToString(context, (err, html) => {
@@ -51,7 +51,7 @@ server.get('*', (req, res) => {
             console.log(err);
             res.status(500).send('Internal server error');
         } else {
-            ilcSdk.processResponse(ilcData, res, {
+            processResponse(res, {
                 pageTitle: context.meta.inject().title.text(),
                 pageMetaTags: context.meta.inject().meta.text(),
                 appAssets,

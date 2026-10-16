@@ -8,7 +8,7 @@ const port = 8240;
 
 const ilcSdk = new IlcSdk();
 
-const template = require('lodash.template');
+const template = require('lodash/template');
 const pageTpl = template(fs.readFileSync(__dirname + '/tpl.ejs'));
 
 
@@ -21,7 +21,6 @@ if (process.env.NODE_ENV === 'development') {
             headers: {
                 'Access-Control-Allow-Origin': '*',
             },
-            logLevel: 'debug',
         })
     );
 } else {
@@ -31,9 +30,9 @@ if (process.env.NODE_ENV === 'development') {
 
 
 app.get('/fragment', (req, res) => {
-    const reqData = ilcSdk.processRequest(req);
+    const { requestData } = ilcSdk.processRequest(req);
 
-    res.send(`<div data-ssr-content="true">${pageTpl({getCurrentPathProps: () => reqData.getCurrentPathProps()})}</div>`);
+    res.send(`<div data-ssr-content="true">${pageTpl({getCurrentPathProps: () => requestData.getCurrentPathProps()})}</div>`);
 });
 
 app.listen(port, () => console.log(`System app listening on port ${port}!`));
